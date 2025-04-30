@@ -18,5 +18,5 @@ const InputField = ({ type, placeholder, icon }) => {
     </div>
   )
 }
-export default InputField;/**/
+export default InputField;/* */
 
