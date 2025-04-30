@@ -19,3 +19,4 @@ const InputField = ({ type, placeholder, icon }) => {
   )
 }
 export default InputField;
+
