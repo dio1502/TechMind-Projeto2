@@ -1,10 +1,6 @@
 import InputField from "./components/InputField";
 const App = () => {
   return (
-    <>
-    <div className="logo-container">
-      <img src="dist/TechmindLogo.svg" alt="Techmind"></img>
-    </div>
     <div className="login-container">
       <h2 className="form-title">Log in</h2>
       <form action="#" className="login-form">
@@ -17,7 +13,6 @@ const App = () => {
         Don't have an account? <a href="#" className="signup-link">Sign up</a>
       </p>
     </div>
-    </>
   )
 }
 export default App;

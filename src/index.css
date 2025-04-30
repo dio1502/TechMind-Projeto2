@@ -26,18 +26,9 @@ body{
   padding: 2rem 1.5rem;
   border-radius: 0.5rem;
   background: #fff;
-  box-shadow: 0 20px 20px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
-.logo-container {
-  display: flex;
-  justify-content:flex-start;
-  justify-self: center;
-  max-width: 410px;
-  padding: 1rem 1rem;
-  border-radius: 0.5rem 0.5rem 0 0;
-  background: #fff;
-  box-shadow: 0 -20px 20px 3px rgba(0, 0, 0, 0.2);
-}
+
 .login-container .form-title {
   text-align: center;
   font-size: 1.37rem;
