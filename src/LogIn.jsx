@@ -1,16 +1,7 @@
 import InputField from "./components/InputField";
 import './SignUp.jsx';
-import { useNavigate, navigateToSignup } from "./navigate.jsx";
 
 const LogIn = () => {
-
-  const { navigateTo } = useNavigation();
-
-  const handleSignupClick = (e) => {
-    e.preventDefault();
-    navigateToSignup(navigateTo);
-  };
-
   return (
     <div className="login-container">
       <h2 className="form-title">Log in</h2>
@@ -22,7 +13,7 @@ const LogIn = () => {
         <button type="submit" className="login-button">Log In</button>
       </form>
       <p className="signup-prompt">
-        Don't have an account? <a href="#" className="signup-link" onClick={handleSignupClick}>Sign up</a>
+        Don't have an account? <a href="#" className="signup-link" >Sign up</a>
       </p>
     </div>
   )
