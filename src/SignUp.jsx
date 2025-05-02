@@ -9,6 +9,9 @@ const SignUp = () => {
                 <InputField type="number" placeholder="Apartment Number"/>
                 <button type="submit" className="signup-button">Sign Up</button>
             </form>
+            <p className="signup-prompt">
+                Already have an account? <a href="#" className="signup-link" >Log in</a>
+            </p>
         </div>
     )
 }
