@@ -1,4 +1,6 @@
 import InputField from "./components/InputField";
+import { Link } from "react-router-dom";
+
 const SignUp = () => {
     return (
         <div className="signup-container">
@@ -10,7 +12,7 @@ const SignUp = () => {
                 <button type="submit" className="signup-button">Sign Up</button>
             </form>
             <p className="signup-prompt">
-                Already have an account? <a href="#" className="signup-link" >Log in</a>
+                Already have an account? <Link to="/login" className="signup-link">Log in</Link>
             </p>
         </div>
     )
