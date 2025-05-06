@@ -1,0 +1,118 @@
+/* Container principal */
+.link-main{
+    display: flex;
+    flex-direction: row;
+    margin: 1% 1%;
+}
+.link-main img,label{
+    margin: 0 6px;
+    line-height: 1.25;
+}
+
+.Page-container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; 
+    background-color: #6699CC;
+}
+
+.report-container {
+    max-width: 600px;
+    width: 45vw;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  /* Título */
+  .report-container h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    color: #1f2937; 
+  }
+  
+  /* Formulário */
+  .report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  /* Campos */
+  .report-form .field-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Labels */
+  .report-form label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: #374151; 
+  }
+  
+  /* Inputs e selects */
+  .report-form input[type="text"],
+  .report-form select,
+  .report-form textarea,
+  .report-form input[type="file"] {
+    font-size: 1rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #d1d5db; 
+    border-radius: 8px;
+  }
+  
+  .report-form input[type="text"]:focus,
+  .report-form select:focus,
+  .report-form textarea:focus {
+    outline: none;
+    border-color: #3b82f6; /* azul */
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+  }
+  
+  /* Placeholder */
+  .report-form input::placeholder,
+  .report-form textarea::placeholder {
+    color: #9ca3af; 
+  }
+  
+  /* Botão de envio */
+  .report-form .btn-submit {
+    align-self: flex-end;
+    padding: 0.75rem 1.5rem;
+    background-color: #2563eb; 
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .report-form .btn-submit:hover {
+    background-color: #1e40af; 
+    transform: translateY(-1px);
+  }
+  
+  .report-form .btn-submit:active {
+    transform: translateY(1px);
+  }
+  
+  /* Responsividade */
+  @media (max-width: 640px) {
+    .report-container {
+      margin: 1rem;
+      padding: 1rem;
+    }
+  
+    .report-form .btn-submit {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  
