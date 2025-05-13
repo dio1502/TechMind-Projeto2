@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LogIn from '../pages/LogIn';
 import SignUp from '../pages/SignUp';
 import ForgotPassword from '../pages/ForgotPassword';
+import ForgotPasswordNext from '../subpages/ForgotPasswordNext';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/password" element={<ForgotPassword />} />
+        <Route path="/passwordnext" element={<ForgotPasswordNext />} />
       </Routes>
     </Router>
   );
