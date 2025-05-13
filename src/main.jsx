@@ -4,9 +4,10 @@ import './Login.css'
 import './Signup.css'
 import LogIn from './LogIn.jsx'
 import SignUp from './SignUp.jsx'
+import App from './components/Router.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <LogIn />
+    <App />
   </StrictMode>,
 )
