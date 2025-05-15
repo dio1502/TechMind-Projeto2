@@ -9,10 +9,10 @@ const SignUp = () => {
                 <InputField type="email" placeholder="Email address" icon="mail" />
                 <InputField type="password" placeholder="Password" icon="lock" />
                 <InputField type="number" placeholder="Apartment Number"/>
-                <button type="submit" className="signup-button">Sign Up</button>
+                <Link to="/login"><button type="submit" className="signup-button">Sign Up</button></Link>
             </form>
             <p className="signup-prompt">
-                Already have an account? <Link to="/login" className="signup-link">Log in</Link>
+                Already have an account? <Link to="/login">Log in</Link>
             </p>
         </div>
     )

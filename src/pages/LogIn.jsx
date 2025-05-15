@@ -11,12 +11,12 @@ const LogIn = () => {
         <InputField type="password" placeholder="Password" icon="lock" />
         <InputField type="number" placeholder="Apartment Number"/>
         <p className="forgot-password">
-        <Link to="/password" className="password-link">Forgot password? </Link>
+        <Link to="/password">Forgot password? </Link>
         </p>
-        <button type="submit" className="login-button">Log In</button>
+        <Link to="/home"><button type="submit" className="login-button">Log In</button></Link>
       </form>
       <p className="signup-prompt">
-        Don't have an account? <Link to="/signup" className="signup-link">Sign up</Link>
+        Don't have an account? <Link to="/signup">Sign up</Link>
       </p>
     </div>
   )

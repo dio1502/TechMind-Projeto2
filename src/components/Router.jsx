@@ -1,21 +1,22 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LogIn from '../pages/LogIn';
+import LogIn from '../Pages/LogIn';
 import SignUp from '../pages/SignUp';
+import Home from '../pages/Home';
 import ForgotPassword from '../pages/ForgotPassword';
-import ForgotPasswordNext from '../subpages/ForgotPasswordNext';
+import ForgotPasswordSelection from '../subpages/ForgotPasswordSelection';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/password" element={<ForgotPassword />} />
-        <Route path="/passwordnext" element={<ForgotPasswordNext />} />
+        <Route path="/password-selection" element={<ForgotPasswordSelection />} />
       </Routes>
     </Router>
   );
 }
-
 export default App;

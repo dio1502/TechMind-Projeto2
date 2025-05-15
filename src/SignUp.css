@@ -128,3 +128,44 @@ body{
 .signup-container a:hover {
   text-decoration: underline;
 }
+
+
+/*CSS do Forgot password*/
+
+.Contact-detail{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* ou altura fixa, ex: 200px */
+  text-align: center;
+}
+
+.next-button {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 54px;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 2.19rem;
+  border-radius: 0.31rem;
+  background: #6699CC;
+  transition: 0.3s ease;
+}
+
+.back-button {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 54px;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 2.19rem;
+  border-radius: 0.31rem;
+  background: #6699CC;
+  transition: 0.3s ease;
+}

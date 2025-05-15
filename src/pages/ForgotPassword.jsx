@@ -6,12 +6,14 @@ const ForgotPassword = () => {
         <div className="signup-container">
             <h2 className="form-title">Forget Password</h2>
             <form action="#" className="signup-form">
-                <p>Provide your account's email for wich you want to reset your password</p>
+                <div class="Contact-detail">
+                    <p>Provide your account's email for wich you want to reset your password</p>
+                </div>
                 <InputField type="email" placeholder="Email address" icon="mail" />
-                <Link to="/passwordnext" className="signup-link"><button type="submit" className="signup-button">Next</button></Link>
+                <Link to="/password-selection"><button type="submit" className="next-button">Next</button></Link>
             </form>
             <p className="signup-prompt">
-                Already have an account? <Link to="/login" className="signup-link">Log in</Link>
+                Already have an account? <Link to="/login">Log in</Link>
             </p>
         </div>
     )
