@@ -14,25 +14,7 @@ export const OrderProvider = ({ children }) => {
       return savedOrders
         ? JSON.parse(savedOrders)
         : [
-            
-            {
-              id: "ORD001",
-              recipientName: "John Doe",
-              apartmentNumber: "101",
-              orderNumber: "PKG001",
-              packageType: "Box",
-              deliveryDate: "2023-05-15",
-              status: "Delivered",
-            },
-            {
-              id: "ORD002",
-              recipientName: "Jane Smith",
-              apartmentNumber: "202",
-              orderNumber: "PKG002",
-              packageType: "Envelope",
-              deliveryDate: "2023-05-16",
-              status: "In Transit",
-            },
+          
           ]
     }
     return []

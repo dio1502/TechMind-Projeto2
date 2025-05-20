@@ -1,24 +1,24 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
-import OrderHistory from "./pages/OrderHistory"
-import OrderRegistration from "./pages/OrderRegistration"
-import OrderDetails from "./pages/OrderDetails"
 import Logo from "./components/Logo"
-import { OrderProvider } from "./context/OrderContext"
+import AnnouncementDetails from "./pages/AnnouncemnetDetails"
+import AnnouncementHistory from "./pages/AnnouncementHistory"
+import AnnouncementRegistration from "./pages/AnnouncementRegistration"
 import "./App.css"
+import { AnnouncementProvider } from "./context/AnnouncementContext"
 
 const HomePage = () => {
   return (
     <div className="home-page">
       <div className="home-header">
         <Logo />
-        <h1>Order Management System</h1>
+        <h1>Announcement Management System</h1>
       </div>
       <nav className="main-nav">
-        <Link to="/order-registration" className="nav-link">
-          Order Registration
+        <Link to="/announcement-registration" className="nav-link">
+          Announcement Registration
         </Link>
-        <Link to="/order-history" className="nav-link">
-          Order History
+        <Link to="/announcement-history" className="nav-link">
+          Announcement History
         </Link>
       </nav>
     </div>
@@ -27,19 +27,20 @@ const HomePage = () => {
 
 function App() {
   return (
-    <OrderProvider>
+  <><></><AnnouncementProvider>
       <Router>
         <div className="app">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/order-registration" element={<OrderRegistration />} />
-            <Route path="/order-history" element={<OrderHistory />} />
-            <Route path="/order-details/:id" element={<OrderDetails />} />
+            <Route path="/announcement-registration" element={<AnnouncementRegistration />} />
+            <Route path="/announcement-history" element={<AnnouncementHistory />} />
+            <Route path="/announcement-details/:id" element={<AnnouncementDetails />} />
           </Routes>
         </div>
       </Router>
-    </OrderProvider>
+    </AnnouncementProvider></>
   )
 }
+
 
 export default App
