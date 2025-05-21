@@ -4,6 +4,7 @@ import SignUp from '../pages/SignUp';
 import Home from '../pages/Home';
 import ForgotPassword from '../pages/ForgotPassword';
 import ForgotPasswordSelection from '../subpages/ForgotPasswordSelection';
+import ForgotPasswordNewCredentials from '../subpages/ForgotPasswordNewCredentials';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/password" element={<ForgotPassword />} />
         <Route path="/password-selection" element={<ForgotPasswordSelection />} />
+        <Route path="/forgotpassword-newcredentials" element={<ForgotPasswordNewCredentials />} />
       </Routes>
     </Router>
   );

@@ -9,7 +9,7 @@ const SignUp = () => {
                 <InputField type="email" placeholder="Email address" icon="mail" />
                 <InputField type="password" placeholder="Password" icon="lock" />
                 <InputField type="number" placeholder="Apartment Number"/>
-                <Link to="/login"><button type="submit" className="signup-button">Sign Up</button></Link>
+                <Link to="/login"><button type="submit" className="signup-button">Sign Up</button></Link> {/*Criar o popup se a conta for criada com secesso */}
             </form>
             <p className="signup-prompt">
                 Already have an account? <Link to="/login">Log in</Link>

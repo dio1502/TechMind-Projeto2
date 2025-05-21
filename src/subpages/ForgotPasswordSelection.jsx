@@ -7,11 +7,11 @@ const ForgotPasswordSelection = () => {
             <h2 className="form-title">Make Selection</h2>
             <form action="#" className="signup-form">
                 {/* Selecionar a faorma que quer repor a palavra passe, por exemplo via email*/}
-                <div class="Contact-detail">
+                <div className="Contact-detail">
                     <p>Select wich contact detail should we use to reset your password.</p>
                 </div>
                 {/*Criar um botao diferente no qual o utilizador clica para selecionar o metodo que pretende usar, no caso email*/}
-                <button type="submit" className="signup-button">Use Email</button>
+                <Link to="/forgotpassword-newcredentials"><button type="submit" className="signup-button">Use Email</button></Link>
                 <Link to="/password"><button type="submit" className="back-button">Back</button></Link>
             </form>
             <p className="signup-prompt">
