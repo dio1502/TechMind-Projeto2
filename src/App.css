@@ -23,7 +23,11 @@ body {
 .create-request-page,
 .request-status-page,
 .request-list-page,
-.request-management-page {
+.request-management-page,
+.invoice-reports-page,
+.invoice-history-page,
+.invoice-details-page,
+.invoice-payment-page {
   margin-bottom: 30px;
 }
 
@@ -61,6 +65,15 @@ body {
 .form-actions {
   margin-top: 20px;
   text-align: center;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
 }
 
 .textarea-field {
@@ -417,6 +430,22 @@ body {
 }
 
 .status-cancelled {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* Update status classes */
+.status-paid {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-missing {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.status-overdue {
   background-color: #ffebee;
   color: #c62828;
 }
@@ -918,6 +947,56 @@ body {
   font-size: 1rem;
 }
 
+/* Reports List Styles */
+.reports-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.report-list-item {
+  background-color: #e0e0e0;
+  padding: 15px;
+  border: 1px solid #999;
+}
+
+.report-list-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.report-subject {
+  margin-bottom: 10px;
+}
+
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.details-link {
+  color: blue;
+  text-decoration: none;
+}
+
+.details-link:hover {
+  text-decoration: underline;
+}
+
+/* Report Detail View */
+.request-detail-view {
+  background-color: #e0e0e0;
+  padding: 15px;
+  border: 1px solid #999;
+}
+
+.action-buttons-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
 /* Logo */
 .logo {
   background-color: #000;
@@ -929,6 +1008,185 @@ body {
   justify-content: center;
   font-weight: bold;
   margin-right: 15px;
+}
+
+/* Invoice Styles */
+.invoice-container {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  padding: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.month-section {
+  margin-bottom: 20px;
+}
+
+.month-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.invoice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.invoice-item {
+  background-color: #f0f0f0;
+  padding: 15px;
+  border: 1px solid #ccc;
+}
+
+.invoice-item.detailed {
+  display: flex;
+  justify-content: space-between;
+}
+
+.invoice-details {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.invoice-info {
+  flex: 1;
+}
+
+.invoice-payment {
+  flex: 1;
+}
+
+.invoice-id {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.invoice-apartment {
+  margin-bottom: 5px;
+}
+
+.payment-date {
+  margin-bottom: 5px;
+}
+
+.payment-status {
+  margin-bottom: 5px;
+}
+
+.condominium-fee {
+  margin-bottom: 5px;
+}
+
+.invoice-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.extra-info {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #ccc;
+}
+
+.extra-info-label {
+  font-style: italic;
+  color: #666;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.toggle-button {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.toggle-button.active {
+  background-color: #333;
+  color: white;
+}
+
+/* Invoice Details Styles */
+.invoice-details-container {
+  background-color: #e0e0e0;
+  padding: 15px;
+  border: 1px solid #ccc;
+}
+
+.invoice-details-section {
+  margin-bottom: 20px;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.pay-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.pay-button:hover {
+  background-color: #388e3c;
+}
+
+/* Payment Styles */
+.payment-container {
+  background-color: #e0e0e0;
+  padding: 15px;
+  border: 1px solid #ccc;
+}
+
+.payment-methods {
+  margin-top: 20px;
+}
+
+.payment-options {
+  display: flex;
+  gap: 20px;
+  margin: 15px 0;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.payment-label {
+  font-weight: bold;
+}
+
+.card-details,
+.mbway-details {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+}
+
+.payment-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 /* Media Queries */
@@ -951,5 +1209,8 @@ body {
   .management-layout {
     flex-direction: row;
   }
-}
 
+  .invoice-details {
+    flex-wrap: nowrap;
+  }
+}

@@ -6,9 +6,14 @@ import CreateRequest from "./pages/CreateRequest"
 import RequestStatus from "./pages/RequestStatus"
 import RequestList from "./pages/RequestList"
 import RequestManagement from "./pages/RequestManagement"
+import InvoiceReports from "./pages/InvoiceReports"
+import InvoiceHistory from "./pages/InvoiceHistory"
+import InvoiceDetails from "./pages/InvoiceDetails"
+import InvoicePayment from "./pages/InvoicePayment"
 import Logo from "./components/Logo"
 import { OrderProvider } from "./context/OrderContext"
 import { RequestProvider } from "./context/RequestContext"
+import { InvoiceProvider } from "./context/InvoiceContext"
 import "./App.css"
 
 const HomePage = () => {
@@ -38,10 +43,22 @@ const HomePage = () => {
               Create Request
             </Link>
             <Link to="/request-list" className="nav-link">
-              Request List
+              Request Status
             </Link>
             <Link to="/request-management" className="nav-link">
               Request Management
+            </Link>
+          </nav>
+        </div>
+
+        <div className="module">
+          <h2 className="module-title">Invoice Management</h2>
+          <nav className="module-nav">
+            <Link to="/invoice-reports" className="nav-link">
+              Invoice Reports
+            </Link>
+            <Link to="/invoice-history" className="nav-link">
+              Invoice History
             </Link>
           </nav>
         </div>
@@ -54,20 +71,26 @@ function App() {
   return (
     <OrderProvider>
       <RequestProvider>
-        <Router>
-          <div className="app">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/order-registration" element={<OrderRegistration />} />
-              <Route path="/order-history" element={<OrderHistory />} />
-              <Route path="/order-details/:id" element={<OrderDetails />} />
-              <Route path="/create-request" element={<CreateRequest />} />
-              <Route path="/request-status/:id" element={<RequestStatus />} />
-              <Route path="/request-list" element={<RequestList />} />
-              <Route path="/request-management" element={<RequestManagement />} />
-            </Routes>
-          </div>
-        </Router>
+        <InvoiceProvider>
+          <Router>
+            <div className="app">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/order-registration" element={<OrderRegistration />} />
+                <Route path="/order-history" element={<OrderHistory />} />
+                <Route path="/order-details/:id" element={<OrderDetails />} />
+                <Route path="/create-request" element={<CreateRequest />} />
+                <Route path="/request-status/:id" element={<RequestStatus />} />
+                <Route path="/request-list" element={<RequestList />} />
+                <Route path="/request-management" element={<RequestManagement />} />
+                <Route path="/invoice-reports" element={<InvoiceReports />} />
+                <Route path="/invoice-history" element={<InvoiceHistory />} />
+                <Route path="/invoice-details/:id" element={<InvoiceDetails />} />
+                <Route path="/invoice-payment/:id" element={<InvoicePayment />} />
+              </Routes>
+            </div>
+          </Router>
+        </InvoiceProvider>
       </RequestProvider>
     </OrderProvider>
   )
