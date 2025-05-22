@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Reportmanage = () => {
     return (
     <div class="report-page">
@@ -39,8 +41,9 @@ const Reportmanage = () => {
                 </div>
                 <div className="actions">
                 <label>Ações:</label>
-                <button type="button" class="btn-approve">Aprovar</button>
+                <button type="button" class="btn-approve">Resolvido</button>
                 <button type="button" class="btn-reject">Rejeitar</button>
+                <button type="button" class="btn-reject">Em andamento</button>
                 </div>
             </form>
         </div>

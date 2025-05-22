@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const ReportIssueForm = () => {
   return (
@@ -33,7 +34,7 @@ const ReportIssueForm = () => {
             <label>
               Descrição
             </label>
-            <textarea required rows={4} placeholder="Detalhe o problema com o máximo de informações"/>
+            <textarea maxLength={1000} required rows={4} placeholder="Detalhe o problema com o máximo de informações"/>
           </div>
 
           <div class="field">
@@ -44,7 +45,7 @@ const ReportIssueForm = () => {
           </div>
 
           <div class="field">
-            <button type="submit">
+            <button type="submit" value={SubmitEvent("submit", options)}>
               Enviar
             </button>
           </div>

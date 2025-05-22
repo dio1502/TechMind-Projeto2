@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "subject": "Vazamento no banheiro",
+    "description": "Água saindo pelo ralo do chuveiro mesmo com registro fechado.",
+    "category": "hidraulica",
+    "status": "pendente",
+    "date": "2025-05-07",
+    "author": "João Silva",
+    "unit": "Bloco E - Apt 105"
+  },
+  {
+    "id": 2,
+    "subject": "Luz queimada",
+    "description": "A lâmpada do corredor não acende.",
+    "category": "eletrica",
+    "status": "Rejeitado",
+    "date": "2025-05-08",
+    "author": "Maria Costa",
+    "unit": "Bloco A - Apt 208"
+  },
+  {
+    "id": 3,
+    "subject": "Vazamento no banheiro",
+    "description": "Água escorrendo pelo ralo mesmo com o registro fechado. Possível falha no mecanismo interno do chuveiro.",
+    "category": "hidraulica",
+    "status": "pendente",
+    "date": "2025-05-07",
+    "author": "João Silva",
+    "unit": "Bloco A - Apt 203"
+  },
+  {
+    "id": 4,
+    "subject": "Lâmpada queimada no corredor",
+    "description": "A lâmpada do corredor do 3º andar está queimada há três dias.",
+    "category": "eletrica",
+    "status": "pendente",
+    "date": "2025-05-05",
+    "author": "Maria Costa",
+    "unit": "Bloco B - Apt 315"
+  },
+  {
+    "id": 5,
+    "subject": "Portão com defeito",
+    "description": "Portão de entrada demora para fechar e faz barulho alto ao bater.",
+    "category": "manutencao",
+    "status": "em andamento",
+    "date": "2025-05-04",
+    "author": "Carlos Pereira",
+    "unit": "Bloco A - Apt 101"
+  },
+  {
+    "id": 6,
+    "subject": "Vazamento no elevador",
+    "description": "Encontrado pequeno vazamento de óleo no teto do elevador.",
+    "category": "manutencao",
+    "status": "resolvido",
+    "date": "2025-04-30",
+    "author": "Larissa Almeida",
+    "unit": "Bloco C - Apt 402"
+  },
+  {
+    "id": 7,
+    "subject": "Entulho deixado em área comum",
+    "description": "Restos de reforma deixados no corredor do térreo.",
+    "category": "limpeza",
+    "status": "pendente",
+    "date": "2025-05-06",
+    "author": "Pedro Santos",
+    "unit": "Bloco B - Apt 102"
+  }
+]
