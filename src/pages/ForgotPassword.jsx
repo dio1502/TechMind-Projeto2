@@ -1,4 +1,4 @@
-import InputField from "../components/InputField";
+import InputField from "../components/InputField1";
 import { Link } from "react-router-dom";
 import '../css/SignUp.css'
 const ForgotPassword = () => {

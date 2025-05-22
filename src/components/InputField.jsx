@@ -1,22 +1,12 @@
-import { useState } from "react";
+"use client"
 
-const InputField = ({ type, placeholder, icon }) => {
-  const [isPasswordShown, setIsPasswordShown] = useState(false);
+const InputField = ({ label, type = "text", value, onChange, name }) => {
   return (
-    <div className="input-wrapper">
-      <input
-        type={isPasswordShown ? 'text' : type}
-        placeholder={placeholder}
-        className="input-field"
-        required
-      />
-      <i className="material-symbols-rounded">{icon}</i>
-      {type === 'password' && (
-        <i onClick={() => setIsPasswordShown(prevState => !prevState)} className="material-symbols-rounded eye-icon">
-          {isPasswordShown ? 'visibility' : 'visibility_off'}
-        </i>
-      )}
+    <div className="input-field">
+      <label htmlFor={name}>{label}</label>
+      <input type={type} id={name} name={name} value={value} onChange={onChange} className="form-input" />
     </div>
   )
 }
-export default InputField;
+
+export default InputField

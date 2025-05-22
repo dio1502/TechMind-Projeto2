@@ -1,4 +1,4 @@
-import InputField from "../components/InputField.jsx";
+import InputField from "../components/InputField1.jsx";
 import { Link } from "react-router-dom";
 import '../components/Router.jsx';
 import '../css/Login.css'
@@ -14,7 +14,7 @@ const LogIn = () => {
         <p className="forgot-password">
         <Link to="/password">Forgot password? </Link>
         </p>
-        <Link to="/home"><button type="submit" className="login-button">Log In</button></Link>
+        <Link to="/announcement-home"><button type="submit" className="login-button">Log In</button></Link>
       </form>
       <p className="signup-prompt">
         Don't have an account? <Link to="/signup">Sign up</Link>

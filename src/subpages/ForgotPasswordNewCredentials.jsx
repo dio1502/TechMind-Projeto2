@@ -1,4 +1,4 @@
-import InputField from "../components/InputField";
+import InputField from "../components/InputField1";
 import { Link } from "react-router-dom";
 
 const ForgotPasswordNewCredentials = () => {
@@ -13,7 +13,7 @@ const ForgotPasswordNewCredentials = () => {
                 {/*Fazer uma validacao para que as passwords nao sejam diferentes*/}
                 <InputField type="password" placeholder="New Password" icon="lock" />
                 <InputField type="password" placeholder="Confirm Password" icon="lock" />
-                <button type="submit" className="back-button">Update</button>
+                <Link to="/login"><button type="submit" className="back-button">Update</button></Link>
             </form>
         </div>
     )
