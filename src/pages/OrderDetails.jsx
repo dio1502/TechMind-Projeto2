@@ -1,13 +1,18 @@
 "use client"
 
-import { useParams, Link } from "react-router-dom"
+import { useState } from "react"
+import { useParams, Link, useNavigate } from "react-router-dom"
 import Header from "../components/Header"
 import { useOrders } from "../context/OrderContext"
+import { useInvoices } from "../context/InvoiceContext"
 
 const OrderDetails = () => {
   const { id } = useParams()
-  const { getOrderById } = useOrders()
+  const navigate = useNavigate()
+  const { getOrderById, markOrderAsInvoiced } = useOrders()
+  const { addInvoice } = useInvoices()
   const order = getOrderById(id)
+  const [message, setMessage] = useState(null)
 
   if (!order) {
     return (
@@ -21,6 +26,38 @@ const OrderDetails = () => {
         </div>
       </div>
     )
+  }
+
+  const handleGenerateInvoice = () => {
+    if (order.invoiced) {
+      setMessage("This order has already been invoiced.")
+      return
+    }
+
+    try {
+      // Calculate invoice amount based on package type
+      const fee = order.packageType === "Box" ? 25 : 15
+
+      // Create invoice
+      const invoice = addInvoice({
+        apartmentNumber: order.apartmentNumber,
+        fee: fee,
+        description: `Invoice for order ${order.id} - ${order.packageType}`,
+        orderReference: order.id,
+      })
+
+      // Mark order as invoiced
+      markOrderAsInvoiced(order.id)
+
+      setMessage("Invoice generated successfully!")
+
+      // Navigate to invoice details after a short delay
+      setTimeout(() => {
+        navigate(`/invoice-details/${invoice.id}`)
+      }, 1500)
+    } catch (error) {
+      setMessage("Error generating invoice: " + (error.message || "Unknown error"))
+    }
   }
 
   return (
@@ -48,6 +85,10 @@ const OrderDetails = () => {
             <div className="detail-item">
               <span className="detail-label">Order ID:</span>
               <span className="detail-value">{order.id}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Invoice Status:</span>
+              <span className="detail-value">{order.invoiced ? "Invoiced" : "Not Invoiced"}</span>
             </div>
           </div>
         </div>
@@ -82,10 +123,22 @@ const OrderDetails = () => {
           </div>
         </div>
 
+        {message && (
+          <div className={`message-container ${message.includes("Error") ? "error" : "success"}`}>
+            <p>{message}</p>
+          </div>
+        )}
+
         <div className="actions-container">
           <Link to="/order-history" className="back-button">
             ← Back to Order History
           </Link>
+
+          {!order.invoiced && (
+            <button onClick={handleGenerateInvoice} className="generate-invoice-button">
+              Generate Invoice
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -93,3 +146,4 @@ const OrderDetails = () => {
 }
 
 export default OrderDetails
+

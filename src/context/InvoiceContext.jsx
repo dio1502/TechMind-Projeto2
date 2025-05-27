@@ -55,6 +55,7 @@ export const InvoiceProvider = ({ children }) => {
   })
 
   // When the component mounts, convert any Portuguese status values to English
+  // and ensure "Overdue" is changed to "Missing"
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedInvoices = localStorage.getItem("invoices")
@@ -78,6 +79,7 @@ export const InvoiceProvider = ({ children }) => {
   const translateStatusToEnglish = (status) => {
     if (status === "Pago") return "Paid"
     if (status === "Em falta") return "Missing"
+    if (status === "Overdue") return "Missing" // Convert any existing "Overdue" to "Missing"
     return status // Return as is if already in English or unknown
   }
 
@@ -86,6 +88,19 @@ export const InvoiceProvider = ({ children }) => {
     localStorage.setItem("invoices", JSON.stringify(invoices))
   }, [invoices])
 
+  // Function to add a new invoice
+  const addInvoice = (invoiceData) => {
+    const newInvoice = {
+      id: `processo-${String(invoices.length + 1).padStart(2, "0")}`,
+      issueDate: new Date().toISOString().split("T")[0],
+      paymentDate: null,
+      status: "Missing",
+      ...invoiceData,
+    }
+    setInvoices([...invoices, newInvoice])
+    return newInvoice
+  }
+
   // Function to get invoice by ID
   const getInvoiceById = (id) => {
     return invoices.find((invoice) => invoice.id === id) || null
@@ -93,13 +108,16 @@ export const InvoiceProvider = ({ children }) => {
 
   // Function to update invoice status
   const updateInvoiceStatus = (id, status, paymentMethod = null) => {
+    // Ensure we're using "Missing" instead of "Overdue"
+    const normalizedStatus = status === "Overdue" ? "Missing" : status
+
     const updatedInvoices = invoices.map((invoice) => {
       if (invoice.id === id) {
         return {
           ...invoice,
-          status,
-          paymentDate: status === "Paid" ? new Date().toISOString().split("T")[0] : invoice.paymentDate,
-          paymentMethod: status === "Paid" ? paymentMethod || "Card" : invoice.paymentMethod,
+          status: normalizedStatus,
+          paymentDate: normalizedStatus === "Paid" ? new Date().toISOString().split("T")[0] : invoice.paymentDate,
+          paymentMethod: normalizedStatus === "Paid" ? paymentMethod || "Card" : invoice.paymentMethod,
         }
       }
       return invoice
@@ -108,7 +126,7 @@ export const InvoiceProvider = ({ children }) => {
   }
 
   return (
-    <InvoiceContext.Provider value={{ invoices, getInvoiceById, updateInvoiceStatus }}>
+    <InvoiceContext.Provider value={{ invoices, addInvoice, getInvoiceById, updateInvoiceStatus }}>
       {children}
     </InvoiceContext.Provider>
   )
