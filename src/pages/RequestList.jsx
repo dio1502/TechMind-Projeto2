@@ -9,12 +9,35 @@ const RequestList = () => {
   const { requests } = useRequests()
   const [searchTerm, setSearchTerm] = useState("")
 
-  // Filter requests based on search term
-  const filteredRequests = requests.filter(
-    (request) =>
-      request.subject?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      request.id?.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  // Filter requests based on search term - expandido para incluir data
+  const filteredRequests = requests.filter((request) => {
+    const searchLower = searchTerm.toLowerCase()
+
+    // Pesquisa original por subject e ID
+    const matchesText =
+      request.subject?.toLowerCase().includes(searchLower) || request.id?.toLowerCase().includes(searchLower)
+
+    // Pesquisa por data (nova funcionalidade)
+    const matchesDate =
+      request.date &&
+      // Full date match (YYYY-MM-DD)
+      (request.date.includes(searchTerm) ||
+        // Year match (YYYY)
+        request.date.startsWith(searchTerm) ||
+        // Month/Year match (MM/YYYY format converted to YYYY-MM)
+        (searchTerm.includes("/") && request.date.includes(searchTerm.split("/").reverse().join("-"))) ||
+        // Day/Month match (DD/MM format)
+        (searchTerm.includes("/") &&
+          searchTerm.length <= 5 &&
+          request.date.slice(5).replace("-", "/").includes(searchTerm)) ||
+        // Formatted date display match (DD/MM/YYYY)
+        new Date(request.date)
+          .toLocaleDateString("pt-PT")
+          .includes(searchTerm) ||
+        new Date(request.date).toLocaleDateString("en-GB").includes(searchTerm))
+
+    return matchesText || matchesDate
+  })
 
   return (
     <div className="request-list-page">
@@ -23,7 +46,7 @@ const RequestList = () => {
       <div className="search-container">
         <input
           type="text"
-          placeholder="Search requests..."
+          placeholder="Search requests by subject, ID, or date..."
           className="search-input"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -68,4 +91,3 @@ const RequestList = () => {
 }
 
 export default RequestList
-

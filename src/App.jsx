@@ -15,6 +15,7 @@ import { OrderProvider } from "./context/OrderContext"
 import { RequestProvider } from "./context/RequestContext"
 import { InvoiceProvider } from "./context/InvoiceContext"
 import "./App.css"
+import OrderManagement from "./pages/OrderManagement"
 
 const HomePage = () => {
   return (
@@ -32,6 +33,9 @@ const HomePage = () => {
             </Link>
             <Link to="/order-history" className="nav-link">
               Order History
+            </Link>
+            <Link to="/order-management" className="nav-link">
+              Order Management
             </Link>
           </nav>
         </div>
@@ -79,6 +83,7 @@ function App() {
                 <Route path="/order-registration" element={<OrderRegistration />} />
                 <Route path="/order-history" element={<OrderHistory />} />
                 <Route path="/order-details/:id" element={<OrderDetails />} />
+                <Route path="/order-management" element={<OrderManagement />} />
                 <Route path="/create-request" element={<CreateRequest />} />
                 <Route path="/request-status/:id" element={<RequestStatus />} />
                 <Route path="/request-list" element={<RequestList />} />
@@ -97,3 +102,4 @@ function App() {
 }
 
 export default App
+

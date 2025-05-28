@@ -69,8 +69,14 @@ export const OrderProvider = ({ children }) => {
     setOrders(updatedOrders)
   }
 
+  // Function to mark an order as delivered
+  const markOrderAsDelivered = (id) => {
+    const updatedOrders = orders.map((order) => (order.id === id ? { ...order, status: "Delivered" } : order))
+    setOrders(updatedOrders)
+  }
+
   return (
-    <OrderContext.Provider value={{ orders, addOrder, getOrderById, markOrderAsInvoiced }}>
+    <OrderContext.Provider value={{ orders, addOrder, getOrderById, markOrderAsInvoiced, markOrderAsDelivered }}>
       {children}
     </OrderContext.Provider>
   )
