@@ -1,0 +1,299 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import Header from "../../components/Header"
+import { useRequests } from "../../context/RequestContext"
+
+const RequestManagement = () => {
+  const { requests, updateRequestStatus } = useRequests()
+
+  // Filter to only show pending requests
+  const pendingRequests = requests.filter((request) => request.status === "Pending")
+
+  const [selectedRequest, setSelectedRequest] = useState(pendingRequests[0] || null)
+  const [actionNote, setActionNote] = useState("")
+  const [managementRequests, setManagementRequests] = useState(pendingRequests)
+
+  // Modal states
+  const [showModal, setShowModal] = useState(false)
+  const [processedRequest, setProcessedRequest] = useState(null)
+
+  // Update selected request when pending requests change
+  useEffect(() => {
+    setManagementRequests(pendingRequests)
+    if (pendingRequests.length > 0 && (!selectedRequest || !pendingRequests.find((r) => r.id === selectedRequest.id))) {
+      setSelectedRequest(pendingRequests[0])
+      setActionNote("")
+    } else if (pendingRequests.length === 0) {
+      setSelectedRequest(null)
+      setActionNote("")
+    }
+  }, [pendingRequests, selectedRequest])
+
+  // Handle selecting a request
+  const handleSelectRequest = (request) => {
+    setSelectedRequest(request)
+    setActionNote(request.notes || "")
+  }
+
+  // Handle approving a request
+  const handleApprove = () => {
+    if (!selectedRequest) return
+
+    const updatedRequest = updateRequestStatus(selectedRequest.id, "Approved", actionNote)
+
+    // Store the processed request data for the modal
+    setProcessedRequest({
+      id: selectedRequest.id,
+      date: selectedRequest.date,
+      status: "Approved",
+    })
+
+    // Show the modal
+    setShowModal(true)
+
+    // Remove the request from the management list
+    const updatedRequests = managementRequests.filter((request) => request.id !== selectedRequest.id)
+    setManagementRequests(updatedRequests)
+
+    // Select the next request if available
+    if (updatedRequests.length > 0) {
+      setSelectedRequest(updatedRequests[0])
+      setActionNote("")
+    } else {
+      setSelectedRequest(null)
+      setActionNote("")
+    }
+  }
+
+  // Handle rejecting a request
+  const handleReject = () => {
+    if (!selectedRequest) return
+
+    const updatedRequest = updateRequestStatus(selectedRequest.id, "Rejected", actionNote)
+
+    // Store the processed request data for the modal
+    setProcessedRequest({
+      id: selectedRequest.id,
+      date: selectedRequest.date,
+      status: "Rejected",
+    })
+
+    // Show the modal
+    setShowModal(true)
+
+    // Remove the request from the management list
+    const updatedRequests = managementRequests.filter((request) => request.id !== selectedRequest.id)
+    setManagementRequests(updatedRequests)
+
+    // Select the next request if available
+    if (updatedRequests.length > 0) {
+      setSelectedRequest(updatedRequests[0])
+      setActionNote("")
+    } else {
+      setSelectedRequest(null)
+      setActionNote("")
+    }
+  }
+
+  // Close the modal
+  const handleCloseModal = () => {
+    setShowModal(false)
+  }
+
+  if (managementRequests.length === 0 && !showModal) {
+    return (
+      <div className="request-management-page">
+        <Header title="Request Management" />
+        <div className="no-requests">
+          <p>No pending requests to manage.</p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="request-management-page">
+      <Header title="Request Management" />
+
+      <div className="management-container">
+        <div className="management-header">
+          <h2>Pending Requests ({managementRequests.length})</h2>
+        </div>
+
+        <div className="management-layout">
+          <div className="request-list-container">
+            <h3>Select a Request</h3>
+            <div className="request-list">
+              {managementRequests.map((request) => (
+                <div
+                  key={request.id}
+                  className={`request-list-item ${selectedRequest?.id === request.id ? "active" : ""}`}
+                  onClick={() => handleSelectRequest(request)}
+                >
+                  <div className="request-list-header">
+                    <span className="request-id">#{request.id}</span>
+                    <span className="request-date">{request.date}</span>
+                  </div>
+                  <div className="request-list-subject">{request.subject}</div>
+                  <div className="request-list-apartment">Apt: {request.apartmentNumber || "N/A"}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {selectedRequest && (
+            <div className="request-details-panel">
+              <h3>Request Details</h3>
+              <div className="request-management-details">
+                <div className="detail-row">
+                  <label>Process #:</label>
+                  <div className="detail-value">{selectedRequest.id}</div>
+                </div>
+
+                <div className="detail-row">
+                  <label>Date:</label>
+                  <div className="detail-value">{selectedRequest.date}</div>
+                </div>
+
+                <div className="detail-row">
+                  <label>Apartment #:</label>
+                  <div className="detail-value">{selectedRequest.apartmentNumber || "N/A"}</div>
+                </div>
+
+                <div className="detail-row">
+                  <label>Subject:</label>
+                  <div className="detail-value">{selectedRequest.subject}</div>
+                </div>
+
+                <div className="detail-row">
+                  <label>Description:</label>
+                  <div className="detail-value scrollable">{selectedRequest.description}</div>
+                </div>
+
+                <div className="detail-row">
+                  <label>Action Notes:</label>
+                  <textarea
+                    value={actionNote}
+                    onChange={(e) => setActionNote(e.target.value)}
+                    className="action-note"
+                    placeholder="Enter notes about your decision..."
+                    rows="3"
+                  ></textarea>
+                </div>
+
+                <div className="action-buttons">
+                  <button className="approve-button" onClick={handleApprove}>
+                    Approve
+                  </button>
+                  <button className="reject-button" onClick={handleReject}>
+                    Reject
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Success Modal */}
+      {showModal && processedRequest && (
+        <div className="modal-overlay">
+          <div className="success-modal">
+            <div className="success-icon-container">
+              <div
+                className="success-icon-bg"
+                style={{ backgroundColor: processedRequest.status === "Approved" ? "#dcfce7" : "#fee2e2" }}
+              >
+                {processedRequest.status === "Approved" ? (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9 12l2 2 4-4"
+                      stroke="#22c55e"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                ) : (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18 6L6 18M6 6l12 12"
+                      stroke="#ef4444"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
+              </div>
+            </div>
+
+            <h2 className="success-title">
+              Request {processedRequest.status === "Approved" ? "Approved" : "Rejected"} Successfully!
+            </h2>
+            <p className="success-subtitle">
+              The request has been {processedRequest.status.toLowerCase()} and updated in the system.
+            </p>
+
+            <div className="order-info-list">
+              <div className="info-item">
+                <div className="info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"
+                      stroke="#6366f1"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div className="info-content">
+                  <span className="info-label">Request ID</span>
+                  <span className="info-value">{processedRequest.id}</span>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <div className="info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="#6366f1" strokeWidth="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" stroke="#6366f1" strokeWidth="2" />
+                    <line x1="8" y1="2" x2="8" y2="6" stroke="#6366f1" strokeWidth="2" />
+                    <line x1="3" y1="10" x2="21" y2="10" stroke="#6366f1" strokeWidth="2" />
+                  </svg>
+                </div>
+                <div className="info-content">
+                  <span className="info-label">Date</span>
+                  <span className="info-value">{processedRequest.date}</span>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <div className="info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="3" stroke="#6366f1" strokeWidth="2" />
+                    <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <div className="info-content">
+                  <span className="info-label">Status</span>
+                  <span className="info-value">{processedRequest.status}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="modal-buttons">
+              <button className="continue-button" onClick={handleCloseModal}>
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default RequestManagement
