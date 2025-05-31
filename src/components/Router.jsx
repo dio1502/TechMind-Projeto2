@@ -65,6 +65,7 @@ function App() {
                 <Route path="/create-request" element={<CreateRequest />} />
                 <Route path="/request-status/:id" element={<RequestStatus />} />
                 <Route path="/request-list" element={<RequestList />} />
+                <Route path="/order-management" element={<OrderManagement />} />
                 <Route path="/request-management" element={<RequestManagement />} />
 
                 <Route path="/invoice-reports" element={<InvoiceReports />} />

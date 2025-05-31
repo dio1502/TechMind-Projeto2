@@ -19,6 +19,9 @@ const HomePage = () => {
             <Link to="/order-history" className="nav-link">
               Order History
             </Link>
+            <Link to="/order-management" className="nav-link">
+              Order Management
+            </Link>
           </nav>
         </div>
 
