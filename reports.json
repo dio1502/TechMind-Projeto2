@@ -2,143 +2,73 @@
   "reports": [
     {
       "id": "1",
-      "subject": "Vazamento no banheiro",
-      "description": "Água saindo pelo ralo do chuveiro mesmo com registro fechado.",
-      "category": "outro",
-      "status": "pendente",
+      "subject": "Bathroom Leak",
+      "description": "Water leaking through the shower drain even with the valve closed.",
+      "category": "plumbing",
+      "status": "pending",
       "date": "2025-05-07",
       "author": "João Silva",
-      "unit": "Bloco E - Apt 105"
+      "unit": "Block E - Apt 105"
     },
     {
       "id": "2",
-      "subject": "Luz queimada",
-      "description": "A lâmpada do corredor não acende.",
-      "category": "outro",
-      "status": "Rejeitado",
+      "subject": "Broken Light",
+      "description": "The hallway light does not turn on.",
+      "category": "electrical",
+      "status": "rejected",
       "date": "2025-05-08",
       "author": "Maria Costa",
-      "unit": "Bloco A - Apt 208"
+      "unit": "Block A - Apt 208"
     },
     {
       "id": "3",
-      "subject": "Vazamento no banheiro",
-      "description": "Água escorrendo pelo ralo mesmo com o registro fechado. Possível falha no mecanismo interno do chuveiro.",
-      "category": "outro",
-      "status": "pendente",
+      "subject": "Bathroom Leak",
+      "description": "Water running down the drain even with the valve closed. Possible internal shower mechanism failure.",
+      "category": "plumbing",
+      "status": "pending",
       "date": "2025-05-07",
       "author": "João Silva",
-      "unit": "Bloco A - Apt 203"
+      "unit": "Block A - Apt 203"
     },
     {
       "id": "4",
-      "subject": "Lâmpada queimada no corredor",
-      "description": "A lâmpada do corredor do 3º andar está queimada há três dias.",
-      "category": "outro",
-      "status": "pendente",
+      "subject": "Hallway Lamp Out",
+      "description": "The lamp in the 3rd floor hallway has been out for three days.",
+      "category": "electrical",
+      "status": "pending",
       "date": "2025-05-05",
       "author": "Maria Costa",
-      "unit": "Bloco B - Apt 315"
+      "unit": "Block B - Apt 315"
     },
     {
       "id": "5",
-      "subject": "Portão com defeito",
-      "description": "Portão de entrada demora para fechar e faz barulho alto ao bater.",
-      "category": "outro",
-      "status": "em andamento",
+      "subject": "Gate Malfunction",
+      "description": "The entrance gate takes too long to close and makes a loud noise when it slams.",
+      "category": "maintenance",
+      "status": "in progress",
       "date": "2025-05-04",
       "author": "Carlos Pereira",
-      "unit": "Bloco A - Apt 101"
+      "unit": "Block A - Apt 101"
     },
     {
       "id": "6",
-      "subject": "Vazamento no elevador",
-      "description": "Encontrado pequeno vazamento de óleo no teto do elevador.",
-      "category": "outro",
-      "status": "resolvido",
+      "subject": "Elevator Leak",
+      "description": "Found a small oil leak from the top of the elevator.",
+      "category": "maintenance",
+      "status": "resolved",
       "date": "2025-04-30",
       "author": "Larissa Almeida",
-      "unit": "Bloco C - Apt 402"
+      "unit": "Block C - Apt 402"
     },
     {
       "id": "7",
-      "subject": "Entulho deixado em área comum",
-      "description": "Restos de reforma deixados no corredor do térreo.",
-      "category": "outro",
-      "status": "pendente",
+      "subject": "Debris in Common Area",
+      "description": "Renovation debris left in the ground floor corridor.",
+      "category": "cleaning",
+      "status": "pending",
       "date": "2025-05-06",
       "author": "Pedro Santos",
-      "unit": "Bloco B - Apt 102"
-    },
-    {
-      "id": "8",
-      "status": "pendente",
-      "subject": "u67u",
-      "category": "outro",
-      "description": "tyyyyyyyyyyyyyy",
-      "author": "yuytuty",
-      "unit": "rytytr",
-      "date": "2025-06-01"
-    },
-    {
-      "id": "9",
-      "status": "pendente",
-      "subject": "ytyythj",
-      "category": "outro",
-      "description": "tryrr",
-      "author": "tytyr",
-      "unit": "ytrt",
-      "date": "2025-06-01"
-    },
-    {
-      "id": "10",
-      "status": "pendente",
-      "subject": "yht",
-      "category": "outro",
-      "description": "ytytt",
-      "author": "ythyt",
-      "unit": "eytuy5",
-      "date": "2025-06-01"
-    },
-    {
-      "id": "11",
-      "status": "pendente",
-      "subject": "thbrt",
-      "category": "outro",
-      "description": "yoooooooooooo",
-      "author": "trhrtr",
-      "unit": "thrth",
-      "date": "2025-06-01"
-    },
-    {
-      "id": "12",
-      "status": "pendente",
-      "subject": "tyyyyju",
-      "category": "outro",
-      "description": "tyyyyyyuy",
-      "author": "yukui",
-      "unit": "tyyyyu",
-      "date": "2025-06-01"
-    },
-    {
-      "id": "13",
-      "status": "pendente",
-      "subject": "r4trg",
-      "category": "outro",
-      "description": "trytry",
-      "author": "trgrt",
-      "unit": "tryrty",
-      "date": "2025-06-01"
-    },
-    {
-      "id": "14",
-      "status": "pendente",
-      "subject": "56u",
-      "category": "outro",
-      "description": "trrrrrrrrrrrrrrrrrrrr",
-      "author": "trytrrt",
-      "unit": "rtytr",
-      "date": "2025-06-01"
+      "unit": "Block B - Apt 102"
     }
   ]
 }
