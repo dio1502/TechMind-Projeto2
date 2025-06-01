@@ -26,6 +26,32 @@ const Reportmanage = () => {
         setLoading(false);
       });
   }, [id]);
+  
+  const changeStatus = async (newStatus) => {
+    try {
+      const response = await fetch(`http://localhost:4000/reports/${id}`, {
+        method: "PATCH", // or PUT if you prefer to replace entire object
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => null);
+        throw new Error(
+          (errJson && errJson.message) ||
+            `Failed to update status to "${newStatus}".`
+        );
+      }
+
+      const updated = await response.json();
+      setReport(updated); // update local state with returned object
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Error updating status.");
+    }
+  };
 
   if (loading) {
     return (

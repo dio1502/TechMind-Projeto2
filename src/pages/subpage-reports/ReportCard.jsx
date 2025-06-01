@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from "../../context/AuthContext";
 const statusClasses = {
-  'pendente': 'status-pendente',
-  'em andamento': 'status-andamento',
-  'resolvido': 'status-resolvido',
-  'rejeitado': 'status-rejeitado',
+  'pending': 'status-pendente',
+  'in progress': 'status-andamento',
+  'resolved': 'status-resolvido',
+  'rejected': 'status-rejeitado',
 };
 
 function ReportCard({ report }) {
