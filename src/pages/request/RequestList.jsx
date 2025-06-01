@@ -1,43 +1,45 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import Header from "../components/Header"
-import { useRequests } from "../context/RequestContext"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import Header from "../../components/Header";
+import { useRequests } from "../../context/RequestContext";
 
 const RequestList = () => {
-  const { requests } = useRequests()
-  const [searchTerm, setSearchTerm] = useState("")
+  const { requests } = useRequests();
+  const [searchTerm, setSearchTerm] = useState("");
 
+  const filteredRequests = requests.filter(request => {
+    const searchLower = searchTerm.toLowerCase();
 
-  const filteredRequests = requests.filter((request) => {
-    const searchLower = searchTerm.toLowerCase()
-
+    // Atenção: se request.id for number, toLowerCase vai falhar.
+    // Melhor converter para string antes:
+    const idString = String(request.id).toLowerCase();
+    const subjectString = request.subject?.toLowerCase() || "";
 
     const matchesText =
-      request.subject?.toLowerCase().includes(searchLower) || request.id?.toLowerCase().includes(searchLower)
+      subjectString.includes(searchLower) || idString.includes(searchLower);
 
+    let matchesDate = false;
+    if (request.date) {
+      // Supondo que request.date seja “YYYY-MM-DD”
+      const dateISO = request.date;
+      // “dd/mm” -> “MM/DD” -> compara
+      const dateLocalPT = new Date(request.date)
+        .toLocaleDateString("pt-PT")
+        .toLowerCase();
+      const dateLocalGB = new Date(request.date)
+        .toLocaleDateString("en-GB")
+        .toLowerCase();
 
-    const matchesDate =
-      request.date &&
+      matchesDate =
+        dateISO.includes(searchTerm) ||
+        dateLocalPT.includes(searchTerm.toLowerCase()) ||
+        dateLocalGB.includes(searchTerm.toLowerCase());
+    }
 
-      (request.date.includes(searchTerm) ||
-
-        request.date.startsWith(searchTerm) ||
-
-        (searchTerm.includes("/") && request.date.includes(searchTerm.split("/").reverse().join("-"))) ||
-
-        (searchTerm.includes("/") &&
-          searchTerm.length <= 5 &&
-          request.date.slice(5).replace("-", "/").includes(searchTerm)) ||
-
-        new Date(request.date)
-          .toLocaleDateString("pt-PT")
-          .includes(searchTerm) ||
-        new Date(request.date).toLocaleDateString("en-GB").includes(searchTerm))
-
-    return matchesText || matchesDate
-  })
+    return matchesText || matchesDate;
+  });
 
   return (
     <div className="request-list-page">
@@ -49,14 +51,15 @@ const RequestList = () => {
           placeholder="Search requests by subject, ID, or date..."
           className="search-input"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
 
       {filteredRequests.length === 0 ? (
         <div className="no-requests">
           <p>
-            No requests found. {searchTerm ? "Try a different search term." : "Create a new request to get started."}
+            No requests found.{" "}
+            {searchTerm ? "Try a different search term." : "Create a new request to get started."}
           </p>
           {!searchTerm && (
             <Link to="/create-request" className="create-link">
@@ -66,7 +69,7 @@ const RequestList = () => {
         </div>
       ) : (
         <div className="orders-container">
-          {filteredRequests.map((request) => (
+          {filteredRequests.map(request => (
             <div key={request.id} className="request-item">
               <div className="request-header">
                 <div className="request-id">Request #{request.id}</div>
@@ -87,7 +90,6 @@ const RequestList = () => {
         </div>
       )}
     </div>
-  )
-}
-
-export default RequestList
+  );
+};
+export default RequestList;

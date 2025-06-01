@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useParams, Link } from "react-router-dom"
-import Header from "../components/Header"
-import { useRequests } from "../context/RequestContext"
+import { useParams, Link } from "react-router-dom";
+import Header from "../../components/Header";
+import { useRequests } from "../../context/RequestContext";
 
 const RequestStatus = () => {
-  const { id } = useParams()
-  const { getRequestById } = useRequests()
-  const request = getRequestById(id)
+  const { id } = useParams();
+  const { getRequestById } = useRequests();
+  const request = getRequestById(id);
 
   if (!request) {
     return (
@@ -20,7 +20,7 @@ const RequestStatus = () => {
           </Link>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -54,8 +54,7 @@ const RequestStatus = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RequestStatus
-
+export default RequestStatus;
