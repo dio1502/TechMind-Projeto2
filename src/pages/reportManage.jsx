@@ -77,6 +77,10 @@ const Reportmanage = () => {
             <label>Assunto:</label>
             <output>{report.subject}</output>
           </div>
+            <div className="field-group">
+            <label>Categoria:</label>
+            <output>{report.category}</output>
+          </div>
           <div className="field-group">
             <label>Descrição:</label>
             <textarea readOnly rows={4}>

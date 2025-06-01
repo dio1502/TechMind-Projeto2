@@ -33,9 +33,10 @@ const ReportIssueForm = () => {
           setReportId(1);
         } else {
           const maxId = reports.reduce((max, item) => {
-            return typeof item.id === "number" && item.id > max ? item.id : max;
-          }, 8);
-          setReportId(maxId + 1);
+            const currentId = typeof item.id === "number" ? item.id : parseInt(item.id, 10);
+            return currentId > max ? currentId : max;
+          }, 0);
+          setReportId((maxId + 1).toString())
         }
       } catch (err) {
         console.error(err);
@@ -60,7 +61,6 @@ const ReportIssueForm = () => {
         author,
         unit,
         date: new Date().toISOString().split("T")[0],
-        attachment: attachment?.name || null,
       };
 
     // Validação dos campos obrigatórios
