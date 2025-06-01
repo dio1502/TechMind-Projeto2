@@ -1,46 +1,68 @@
-"use client"
+// src/pages/subpage-order/OrderManagement.jsx
+"use client";
 
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import Header from "../../components/Header"
-import { useOrders } from "../../context/OrderContext"
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
+import { useOrders } from "../../context/OrderContext";
 
 const OrderManagement = () => {
-  const navigate = useNavigate()
-  const { orders, markOrderAsDelivered } = useOrders()
-  const [selectedOrder, setSelectedOrder] = useState(null)
-  const [message, setMessage] = useState("")
+  const navigate = useNavigate();
+  const { orders, markOrderAsDelivered } = useOrders();
 
+  // 1) Usamos TODOS os pedidos, não apenas os pendentes
+  const [managementOrders, setManagementOrders] = useState(orders);
+  const [selectedOrder, setSelectedOrder] = useState(orders[0] || null);
+  const [message, setMessage] = useState("");
 
-  const pendingOrders = orders.filter((order) => order.status !== "Delivered")
+  // 2) Sempre que `orders` mudar no contexto, atualizamos localmente
+  useEffect(() => {
+    setManagementOrders(orders);
+
+    // Se o pedido selecionado não existir mais na nova lista, seleciona o primeiro
+    if (orders.length > 0) {
+      setSelectedOrder((prev) => {
+        if (!prev || !orders.find((o) => o.id === prev.id)) {
+          return orders[0];
+        }
+        return prev;
+      });
+      setMessage("");
+    } else {
+      setSelectedOrder(null);
+      setMessage("");
+    }
+  }, [orders]);
 
   const handleOrderSelect = (order) => {
-    setSelectedOrder(order)
-    setMessage("")
-  }
+    setSelectedOrder(order);
+    setMessage("");
+  };
 
   const handleMarkAsArrived = () => {
-    if (!selectedOrder) return
+    if (!selectedOrder || selectedOrder.status === "Delivered") return;
 
     try {
-      markOrderAsDelivered(selectedOrder.id)
-      setMessage("Order marked as delivered successfully!")
+      markOrderAsDelivered(selectedOrder.id);
+      setMessage("Order marked as delivered successfully!");
 
-
+      // Atualiza no componente localmente para refletir imediatamente
       setSelectedOrder({
         ...selectedOrder,
         status: "Delivered",
-      })
+      });
 
-
+      // A mensagem some após 2 segundos e limpa a seleção
       setTimeout(() => {
-        setMessage("")
-        setSelectedOrder(null)
-      }, 2000)
+        setMessage("");
+        setSelectedOrder(null);
+      }, 2000);
     } catch (error) {
-      setMessage("Error updating order status: " + (error.message || "Unknown error"))
+      setMessage(
+        "Error updating order status: " + (error.message || "Unknown error")
+      );
     }
-  }
+  };
 
   return (
     <div className="order-management-page">
@@ -48,36 +70,54 @@ const OrderManagement = () => {
 
       <div className="management-container">
         <div className="management-header">
-          <h2>Pending Orders ({pendingOrders.length})</h2>
+          <h2>All Orders ({managementOrders.length})</h2>
         </div>
 
         <div className="management-layout">
+          {/* 3) Lista de todos os pedidos */}
           <div className="request-list-container">
             <h3>Select an Order</h3>
             <div className="request-list no-scroll">
-              {pendingOrders.length === 0 ? (
+              {managementOrders.length === 0 ? (
                 <div className="no-orders">
-                  <p>No pending orders</p>
+                  <p>No orders available</p>
                 </div>
               ) : (
-                pendingOrders.map((order) => (
+                managementOrders.map((order) => (
                   <div
                     key={order.id}
-                    className={`request-list-item ${selectedOrder?.id === order.id ? "active" : ""}`}
+                    className={`request-list-item ${
+                      selectedOrder?.id === order.id ? "active" : ""
+                    }`}
                     onClick={() => handleOrderSelect(order)}
                   >
                     <div className="request-list-header">
                       <span className="request-id">#{order.id}</span>
                       <span className="request-date">{order.deliveryDate}</span>
                     </div>
-                    <div className="request-list-subject">{order.recipientName}</div>
-                    <div className="request-list-apartment">Apt: {order.apartmentNumber}</div>
+                    <div className="request-list-subject">
+                      {order.recipientName}
+                    </div>
+                    <div className="request-list-apartment">
+                      Apt: {order.apartmentNumber}
+                    </div>
+                    {/* 4) Exibe o status de cada pedido */}
+                    <div className="request-list-status">
+                      <span
+                        className={`status-badge status-${order.status
+                          .toLowerCase()
+                          .replace(" ", "-")}`}
+                      >
+                        {order.status}
+                      </span>
+                    </div>
                   </div>
                 ))
               )}
             </div>
           </div>
 
+          {/* 5) Painel de detalhes do pedido selecionado */}
           <div className="request-details-panel">
             <h3>Order Details</h3>
             {selectedOrder ? (
@@ -89,47 +129,69 @@ const OrderManagement = () => {
 
                 <div className="detail-row">
                   <label>Date:</label>
-                  <div className="detail-value">{selectedOrder.deliveryDate}</div>
+                  <div className="detail-value">
+                    {selectedOrder.deliveryDate}
+                  </div>
                 </div>
 
                 <div className="detail-row">
                   <label>Apartment #:</label>
-                  <div className="detail-value">{selectedOrder.apartmentNumber}</div>
+                  <div className="detail-value">
+                    {selectedOrder.apartmentNumber}
+                  </div>
                 </div>
 
                 <div className="detail-row">
                   <label>Recipient:</label>
-                  <div className="detail-value">{selectedOrder.recipientName}</div>
+                  <div className="detail-value">
+                    {selectedOrder.recipientName}
+                  </div>
                 </div>
 
                 <div className="detail-row">
                   <label>Package Type:</label>
-                  <div className="detail-value">{selectedOrder.packageType}</div>
+                  <div className="detail-value">
+                    {selectedOrder.packageType}
+                  </div>
                 </div>
 
                 <div className="detail-row">
                   <label>Order Number:</label>
-                  <div className="detail-value">{selectedOrder.orderNumber}</div>
+                  <div className="detail-value">
+                    {selectedOrder.orderNumber}
+                  </div>
                 </div>
 
                 <div className="detail-row">
                   <label>Current Status:</label>
                   <div className="detail-value">
-                    <span className={`status-badge status-${selectedOrder.status.toLowerCase().replace(" ", "-")}`}>
+                    <span
+                      className={`status-badge status-${selectedOrder.status
+                        .toLowerCase()
+                        .replace(" ", "-")}`}
+                    >
                       {selectedOrder.status}
                     </span>
                   </div>
                 </div>
 
                 {message && (
-                  <div className={`message-container ${message.includes("Error") ? "error" : "success"}`}>
+                  <div
+                    className={`message-container ${
+                      message.includes("Error") ? "error" : "success"
+                    }`}
+                  >
                     <p>{message}</p>
                   </div>
                 )}
 
+                {/* 6) Mostrar o botão “Arrived” apenas se não estiver “Delivered” */}
                 <div className="action-buttons-container">
                   {selectedOrder.status !== "Delivered" && (
-                    <button className="arrived-button" onClick={handleMarkAsArrived}>
+                    <button
+                      className="arrived-button"
+                      onClick={handleMarkAsArrived}
+                    >
                       Arrived
                     </button>
                   )}
@@ -144,6 +206,7 @@ const OrderManagement = () => {
         </div>
       </div>
     </div>
-  )
-}
-export default OrderManagement
+  );
+};
+
+export default OrderManagement;
