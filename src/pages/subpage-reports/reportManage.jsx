@@ -122,22 +122,22 @@ const Reportmanage = () => {
           </div>
           <div className="actions">
             <label>Ações:</label>
-            <button type="button" className="btn-approve" onClick={() => changeStatus('resolvido')} disabled={saving || report.status === 'resolvido'}>
+            <button type="button" className="btn-approve" onClick={() => changeStatus('resolved')} disabled={saving || report.status === 'resolved'}>
               Resolvido
             </button>
             <button
               type="button"
               className="btn-reject"
-              onClick={() => changeStatus('rejeitado')}
-              disabled={saving || report.status === 'rejeitado'}
+              onClick={() => changeStatus('rejected')}
+              disabled={saving || report.status === 'rejected'}
             >
               Rejeitar
             </button>
             <button
               type="button"
               className="btn-resolve"
-              onClick={() => changeStatus('em andamento')}
-              disabled={saving || report.status === 'em andamento'}
+              onClick={() => changeStatus('in progress')}
+              disabled={saving || report.status === 'in progress'}
             >
               Em andamento
             </button>
