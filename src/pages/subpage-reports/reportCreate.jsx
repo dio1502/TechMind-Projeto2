@@ -139,8 +139,8 @@ const ReportIssueForm = () => {
 
   return (
     <div  className="Page-container">
-        <Link to="/home" className="link-main">
-          <img src="../../public/left-arrow.svg" alt="Voltar" />
+        <Link to="/homepage" className="link-main">
+          <img src="../../left-arrow.svg" alt="Voltar" />
           <span>Menu Principal</span>
         </Link>
 
