@@ -10,11 +10,35 @@ const AnnouncementHistory = () => {
   const [searchTerm, setSearchTerm] = useState("")
 
   
-  const filteredAnnouncements = announcements.filter(
-    (announcement) =>
-      announcement.subject?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      announcement.id?.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  const filteredAnnouncements = announcements.filter((announcement) => {
+    const searchLower = searchTerm.toLowerCase()
+
+    // Pesquisa original por nome, número da encomenda e ID
+    const matchesText =
+      announcement.subject?.toLowerCase().includes(searchLower) ||
+      announcement.description?.toLowerCase().includes(searchLower) 
+
+    // Pesquisa por data (nova funcionalidade)
+    const matchesDate =
+      announcement.deliveryDate &&
+      // Full date match (YYYY-MM-DD)
+        (announcement.deliveryDate.includes(searchTerm) ||
+        // Year match (YYYY)
+          announcement.deliveryDate.startsWith(searchTerm) ||
+        // Month/Year match (MM/YYYY format converted to YYYY-MM)
+        (searchTerm.includes("/") && announcement.deliveryDate.includes(searchTerm.split("/").reverse().join("-"))) ||
+        // Day/Month match (DD/MM format)
+        (searchTerm.includes("/") &&
+          searchTerm.length <= 5 &&
+          announcement.deliveryDate.slice(5).replace("-", "/").includes(searchTerm)) ||
+        // Formatted date display match (DD/MM/YYYY)
+        new Date(announcement.deliveryDate)
+          .toLocaleDateString("pt-PT")
+          .includes(searchTerm) ||
+        new Date(announcement.deliveryDate).toLocaleDateString("en-GB").includes(searchTerm))
+
+    return matchesText || matchesDate
+  })
 
   return (
     <div className="announcement-history-page">
