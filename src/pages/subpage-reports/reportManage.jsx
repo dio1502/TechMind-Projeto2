@@ -6,6 +6,7 @@ const Reportmanage = () => {
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     // Busca o report individual no json-server (ou outro backend)
@@ -28,6 +29,8 @@ const Reportmanage = () => {
   }, [id]);
   
   const changeStatus = async (newStatus) => {
+    if (!report) return;
+    setSaving(true);
     try {
       const response = await fetch(`http://localhost:4000/reports/${id}`, {
         method: "PATCH", // or PUT if you prefer to replace entire object
@@ -66,7 +69,7 @@ const Reportmanage = () => {
       <div className="report-page">
         <p >{error}</p>
         <Link to="/reportmain" className="link-main">
-            <img src="../../../public/left-arrow.svg" alt="Voltar"/>
+            <img src="../../../left-arrow.svg" alt="Voltar"/>
             <span>Voltar para lista de reports</span>
         </Link>
       </div>
@@ -143,5 +146,5 @@ const Reportmanage = () => {
       </div>
     </div>
   );
-} 
+}
 export default Reportmanage;
