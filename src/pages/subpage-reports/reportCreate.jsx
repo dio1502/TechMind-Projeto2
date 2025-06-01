@@ -123,7 +123,7 @@ const ReportIssueForm = () => {
       alert(`Problema reportado com sucesso!\nID gerado: ${createdReport.id}\n` + (createdReport.attachmentUrl? `Anexo salvo em: http://localhost:4000${createdReport.attachmentUrl}`: ""));
 
       // Após sucesso, redireciona
-      navigate("/reportmanage");
+      navigate("/reportmain");
     } catch (err) {
       console.error(err);
       setError(err.message || "Ocorreu um erro inesperado.");

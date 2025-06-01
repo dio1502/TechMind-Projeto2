@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import Logo from "./components/Logo"
-
+import { useAuth } from "../src/context/AuthContext";
 
 const HomePage = () => {
+  const { user } = useAuth();
   return (
     <div className="home-page">
       <div className="home-header">
@@ -19,9 +20,11 @@ const HomePage = () => {
             <Link to="/order-history" className="nav-link">
               Order History
             </Link>
+            {user?.role === "admin" && (
             <Link to="/order-management" className="nav-link">
               Order Management
             </Link>
+            )}
           </nav>
         </div>
 
@@ -34,9 +37,11 @@ const HomePage = () => {
             <Link to="/request-list" className="nav-link">
               Request Status
             </Link>
+            {user?.role === "admin" && (
             <Link to="/request-management" className="nav-link">
               Request Management
             </Link>
+            )}
           </nav>
         </div>
 

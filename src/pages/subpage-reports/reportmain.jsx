@@ -21,8 +21,8 @@ const ReportMain = () => {
 
   return (
     <div className="report-page">
-      <Link to="/home" className="link-main">
-        <img src="../../../public/left-arrow.svg" alt="Voltar"/>
+      <Link to="/homepage" className="link-main">
+        <img src="../../../left-arrow.svg" alt="Voltar"/>
         <span>Home</span>
       </Link>
 

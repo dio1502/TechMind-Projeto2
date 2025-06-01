@@ -66,8 +66,6 @@ function App() {
 
                   <Route path="/" element={<Navigate to="/home" replace />} />
                   <Route path="/reportMain" element={<ReportMain />} />
-                  <Route path="/reportmanage/:id" element={<Reportmanage />} />
-                  <Route path="/reportmanage/" element={<Navigate to="/reportMain" replace />} />
                   <Route path="/reportissueForm" element={<ReportIssueForm />} />
 
                   <Route path="/announcement-registration" element={<AnnouncementRegistration />} />
@@ -91,6 +89,8 @@ function App() {
                   <Route element={<RequireRole role="admin" />}>
                     <Route path="/request-management" element={<RequestManagement />} />
                     <Route path="/order-management" element={<OrderManagement />} />
+                    <Route path="/reportmanage/:id" element={<Reportmanage />} />
+                    <Route path="/reportmanage/" element={<Navigate to="/reportMain" replace />} />
                   </Route>
                 </Route>
 

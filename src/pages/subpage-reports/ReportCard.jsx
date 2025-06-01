@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useAuth } from "../../context/AuthContext";
 const statusClasses = {
   'pendente': 'status-pendente',
   'em andamento': 'status-andamento',
@@ -9,6 +9,7 @@ const statusClasses = {
 };
 
 function ReportCard({ report }) {
+  const { user } = useAuth();
   return (
   <article className="report-card">
       <div className="report-header">
@@ -22,9 +23,11 @@ function ReportCard({ report }) {
         <time dateTime={report.date}>{report.date}</time>
         <span>{report.author}</span>
       </div>
-      <Link to={`/reportmanage/${report.id}`} >
-        Detalhes
-      </Link>
+      {user?.role === "admin" && (
+        <Link to={`/reportmanage/${report.id}`} className="details-button">
+          Detalhes
+        </Link>
+      )}
   </article>
   );
 }
