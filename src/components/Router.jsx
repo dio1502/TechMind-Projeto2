@@ -18,9 +18,9 @@ import OrderHistory from '../pages/subpage-order/OrderHistory';
 import OrderRegistration from '../pages/subpage-order/OrderRegistration';
 
 import CreateRequest from "../pages/subpage-request/CreateRequest"
-import RequestStatus from "../pages/subpage-request/RequestStatus"
-import RequestList from '../pages/subpage-request/RequestList';
-import RequestManagement from "../pages/subpage-request/RequestManagement"
+import RequestStatus from "../pages/request/RequestStatus.jsx"
+import RequestList from '../pages/request/RequestList';
+import RequestManagement from "../pages/request/RequestManagement"
 
 import InvoiceReports from "../pages/invoice/InvoiceReports"
 import InvoiceHistory from "../pages/invoice/InvoiceHistory"

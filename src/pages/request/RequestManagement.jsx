@@ -1,134 +1,135 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Header from "../components/Header"
-import { useRequests } from "../context/RequestContext"
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import Header from "../../components/Header";
+import { useRequests } from "../../context/RequestContext";
+import { useAuth } from "../../context/AuthContext";
 
 const RequestManagement = () => {
-  const { requests, updateRequestStatus } = useRequests()
+  const { user } = useAuth();
 
-
-  const pendingRequests = requests.filter((request) => request.status === "Pending")
-
-  const [selectedRequest, setSelectedRequest] = useState(pendingRequests[0] || null)
-  const [actionNote, setActionNote] = useState("")
-  const [managementRequests, setManagementRequests] = useState(pendingRequests)
-
-
-  const [showModal, setShowModal] = useState(false)
-  const [processedRequest, setProcessedRequest] = useState(null)
-
- 
-  useEffect(() => {
-    setManagementRequests(pendingRequests)
-    if (pendingRequests.length > 0 && (!selectedRequest || !pendingRequests.find((r) => r.id === selectedRequest.id))) {
-      setSelectedRequest(pendingRequests[0])
-      setActionNote("")
-    } else if (pendingRequests.length === 0) {
-      setSelectedRequest(null)
-      setActionNote("")
-    }
-  }, [pendingRequests, selectedRequest])
-
- 
-  const handleSelectRequest = (request) => {
-    setSelectedRequest(request)
-    setActionNote(request.notes || "")
+  // Se não for admin ou não estiver logado, volta para "/"
+  if (!user || user.role !== "admin") {
+    return <Navigate to="/" replace />;
   }
 
+  const { requests, updateRequestStatus } = useRequests();
+  const pendingRequests = requests.filter(r => r.status === "Pending");
+
+  const [managementRequests, setManagementRequests] = useState(pendingRequests);
+  const [selectedRequest, setSelectedRequest] = useState(
+    pendingRequests[0] || null
+  );
+  const [actionNote, setActionNote] = useState("");
+
+  const [showModal, setShowModal] = useState(false);
+  const [processedRequest, setProcessedRequest] = useState(null);
+
+  useEffect(() => {
+    setManagementRequests(pendingRequests);
+
+    if (pendingRequests.length > 0) {
+      setSelectedRequest(prev => {
+        if (!prev || !pendingRequests.find(r => r.id === prev.id)) {
+          return pendingRequests[0];
+        }
+        return prev;
+      });
+      setActionNote("");
+    } else {
+      setSelectedRequest(null);
+      setActionNote("");
+    }
+  }, [pendingRequests]);
+
+  const handleSelectRequest = request => {
+    setSelectedRequest(request);
+    setActionNote(request.notes || "");
+  };
 
   const handleApprove = () => {
-    if (!selectedRequest) return
+    if (!selectedRequest) return;
 
-    const updatedRequest = updateRequestStatus(selectedRequest.id, "Approved", actionNote)
-
+    updateRequestStatus(selectedRequest.id, "Approved", actionNote);
 
     setProcessedRequest({
       id: selectedRequest.id,
       date: selectedRequest.date,
-      status: "Approved",
-    })
+      status: "Approved"
+    });
+    setShowModal(true);
 
+    const updated = managementRequests.filter(r => r.id !== selectedRequest.id);
+    setManagementRequests(updated);
 
-    setShowModal(true)
-
-
-    const updatedRequests = managementRequests.filter((request) => request.id !== selectedRequest.id)
-    setManagementRequests(updatedRequests)
-
-
-    if (updatedRequests.length > 0) {
-      setSelectedRequest(updatedRequests[0])
-      setActionNote("")
+    if (updated.length > 0) {
+      setSelectedRequest(updated[0]);
+      setActionNote("");
     } else {
-      setSelectedRequest(null)
-      setActionNote("")
+      setSelectedRequest(null);
+      setActionNote("");
     }
-  }
-
+  };
 
   const handleReject = () => {
-    if (!selectedRequest) return
+    if (!selectedRequest) return;
 
-    const updatedRequest = updateRequestStatus(selectedRequest.id, "Rejected", actionNote)
-
+    updateRequestStatus(selectedRequest.id, "Rejected", actionNote);
 
     setProcessedRequest({
       id: selectedRequest.id,
       date: selectedRequest.date,
-      status: "Rejected",
-    })
+      status: "Rejected"
+    });
+    setShowModal(true);
 
+    const updated = managementRequests.filter(r => r.id !== selectedRequest.id);
+    setManagementRequests(updated);
 
-    setShowModal(true)
-
-
-    const updatedRequests = managementRequests.filter((request) => request.id !== selectedRequest.id)
-    setManagementRequests(updatedRequests)
-
-
-    if (updatedRequests.length > 0) {
-      setSelectedRequest(updatedRequests[0])
-      setActionNote("")
+    if (updated.length > 0) {
+      setSelectedRequest(updated[0]);
+      setActionNote("");
     } else {
-      setSelectedRequest(null)
-      setActionNote("")
+      setSelectedRequest(null);
+      setActionNote("");
     }
-  }
-
+  };
 
   const handleCloseModal = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   if (managementRequests.length === 0 && !showModal) {
     return (
       <div className="request-management-page">
-        <Header title="Request Management" />
+        <Header title="Gestão de Pedidos" />
         <div className="no-requests">
-          <p>No pending requests to manage.</p>
+          <p>Não há pedidos pendentes para gerenciar.</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="request-management-page">
-      <Header title="Request Management" />
+      <Header title="Gestão de Pedidos" />
 
       <div className="management-container">
         <div className="management-header">
-          <h2>Pending Requests ({managementRequests.length})</h2>
+          <h2>Pedidos Pendentes ({managementRequests.length})</h2>
         </div>
 
         <div className="management-layout">
           <div className="request-list-container">
-            <h3>Select a Request</h3>
+            <h3>Selecione um Pedido</h3>
             <div className="request-list">
-              {managementRequests.map((request) => (
+              {managementRequests.map(request => (
                 <div
                   key={request.id}
-                  className={`request-list-item ${selectedRequest?.id === request.id ? "active" : ""}`}
+                  className={`request-list-item ${
+                    selectedRequest?.id === request.id ? "active" : ""
+                  }`}
                   onClick={() => handleSelectRequest(request)}
                 >
                   <div className="request-list-header">
@@ -136,7 +137,9 @@ const RequestManagement = () => {
                     <span className="request-date">{request.date}</span>
                   </div>
                   <div className="request-list-subject">{request.subject}</div>
-                  <div className="request-list-apartment">Apt: {request.apartmentNumber || "N/A"}</div>
+                  <div className="request-list-apartment">
+                    Apt: {request.apartmentNumber || "N/A"}
+                  </div>
                 </div>
               ))}
             </div>
@@ -144,50 +147,48 @@ const RequestManagement = () => {
 
           {selectedRequest && (
             <div className="request-details-panel">
-              <h3>Request Details</h3>
+              <h3>Detalhes do Pedido</h3>
               <div className="request-management-details">
                 <div className="detail-row">
-                  <label>Process #:</label>
+                  <label>Número do Processo:</label>
                   <div className="detail-value">{selectedRequest.id}</div>
                 </div>
-
                 <div className="detail-row">
-                  <label>Date:</label>
+                  <label>Data:</label>
                   <div className="detail-value">{selectedRequest.date}</div>
                 </div>
-
                 <div className="detail-row">
-                  <label>Apartment #:</label>
-                  <div className="detail-value">{selectedRequest.apartmentNumber || "N/A"}</div>
+                  <label>Apartamento:</label>
+                  <div className="detail-value">
+                    {selectedRequest.apartmentNumber || "N/A"}
+                  </div>
                 </div>
-
                 <div className="detail-row">
-                  <label>Subject:</label>
+                  <label>Assunto:</label>
                   <div className="detail-value">{selectedRequest.subject}</div>
                 </div>
-
                 <div className="detail-row">
-                  <label>Description:</label>
-                  <div className="detail-value scrollable">{selectedRequest.description}</div>
+                  <label>Descrição:</label>
+                  <div className="detail-value scrollable">
+                    {selectedRequest.description}
+                  </div>
                 </div>
-
                 <div className="detail-row">
-                  <label>Action Notes:</label>
+                  <label>Anotações:</label>
                   <textarea
                     value={actionNote}
-                    onChange={(e) => setActionNote(e.target.value)}
+                    onChange={e => setActionNote(e.target.value)}
                     className="action-note"
-                    placeholder="Enter notes about your decision..."
+                    placeholder="Digite notas sobre sua decisão..."
                     rows="3"
                   ></textarea>
                 </div>
-
                 <div className="action-buttons">
                   <button className="approve-button" onClick={handleApprove}>
-                    Approve
+                    Aprovar
                   </button>
                   <button className="reject-button" onClick={handleReject}>
-                    Reject
+                    Recusar
                   </button>
                 </div>
               </div>
@@ -196,17 +197,27 @@ const RequestManagement = () => {
         </div>
       </div>
 
-      {/* Success Modal */}
       {showModal && processedRequest && (
         <div className="modal-overlay">
           <div className="success-modal">
             <div className="success-icon-container">
               <div
                 className="success-icon-bg"
-                style={{ backgroundColor: processedRequest.status === "Approved" ? "#dcfce7" : "#fee2e2" }}
+                style={{
+                  backgroundColor:
+                    processedRequest.status === "Approved"
+                      ? "#dcfce7"
+                      : "#fee2e2"
+                }}
               >
                 {processedRequest.status === "Approved" ? (
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       d="M9 12l2 2 4-4"
                       stroke="#22c55e"
@@ -216,7 +227,13 @@ const RequestManagement = () => {
                     />
                   </svg>
                 ) : (
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       d="M18 6L6 18M6 6l12 12"
                       stroke="#ef4444"
@@ -230,16 +247,27 @@ const RequestManagement = () => {
             </div>
 
             <h2 className="success-title">
-              Request {processedRequest.status === "Approved" ? "Approved" : "Rejected"} Successfully!
+              Pedido{" "}
+              {processedRequest.status === "Approved"
+                ? "Aprovado"
+                : "Recusado"}{" "}
+              com Sucesso!
             </h2>
             <p className="success-subtitle">
-              The request has been {processedRequest.status.toLowerCase()} and updated in the system.
+              O pedido foi{" "}
+              {processedRequest.status.toLowerCase()} e atualizado no sistema.
             </p>
 
             <div className="order-info-list">
               <div className="info-item">
                 <div className="info-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"
                       stroke="#6366f1"
@@ -250,31 +278,84 @@ const RequestManagement = () => {
                   </svg>
                 </div>
                 <div className="info-content">
-                  <span className="info-label">Request ID</span>
+                  <span className="info-label">ID do Pedido</span>
                   <span className="info-value">{processedRequest.id}</span>
                 </div>
               </div>
 
               <div className="info-item">
                 <div className="info-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="#6366f1" strokeWidth="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" stroke="#6366f1" strokeWidth="2" />
-                    <line x1="8" y1="2" x2="8" y2="6" stroke="#6366f1" strokeWidth="2" />
-                    <line x1="3" y1="10" x2="21" y2="10" stroke="#6366f1" strokeWidth="2" />
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      x="3"
+                      y="4"
+                      width="18"
+                      height="18"
+                      rx="2"
+                      ry="2"
+                      stroke="#6366f1"
+                      strokeWidth="2"
+                    />
+                    <line
+                      x1="16"
+                      y1="2"
+                      x2="16"
+                      y2="6"
+                      stroke="#6366f1"
+                      strokeWidth="2"
+                    />
+                    <line
+                      x1="8"
+                      y1="2"
+                      x2="8"
+                      y2="6"
+                      stroke="#6366f1"
+                      strokeWidth="2"
+                    />
+                    <line
+                      x1="3"
+                      y1="10"
+                      x2="21"
+                      y2="10"
+                      stroke="#6366f1"
+                      strokeWidth="2"
+                    />
                   </svg>
                 </div>
                 <div className="info-content">
-                  <span className="info-label">Date</span>
+                  <span className="info-label">Data</span>
                   <span className="info-value">{processedRequest.date}</span>
                 </div>
               </div>
 
               <div className="info-item">
                 <div className="info-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="3" stroke="#6366f1" strokeWidth="2" />
-                    <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" />
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="3"
+                      stroke="#6366f1"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M12 1v6m0 6v6m11-7h-6m-6 0H1"
+                      stroke="#6366f1"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </div>
                 <div className="info-content">
@@ -286,15 +367,13 @@ const RequestManagement = () => {
 
             <div className="modal-buttons">
               <button className="continue-button" onClick={handleCloseModal}>
-                Continue
+                Continuar
               </button>
             </div>
           </div>
         </div>
       )}
     </div>
-  )
-}
-export default RequestManagement
-
-
+  );
+};
+export default RequestManagement;
