@@ -79,7 +79,7 @@ const Reportmanage = () => {
   return (
     <div className="report-page">
       <Link to="/reportmain" className="link-main">
-        <img src="../../../public/left-arrow.svg" alt="Voltar" />
+        <img src="../../../left-arrow.svg" alt="Voltar" />
         <span>Report History</span>
       </Link>
 
