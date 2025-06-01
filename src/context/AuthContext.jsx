@@ -22,9 +22,7 @@ export function AuthProvider({ children }) {
     if (found) {
       setUser(found);
       localStorage.setItem("user", JSON.stringify(found));
-      // Se for admin, vai para /admin; se user, vai para /user
-      if (found.role === "admin") navigate("/homepage");
-      else navigate("/user");
+      navigate("/homepage");
       return true;
     }
     return false;

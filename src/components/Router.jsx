@@ -76,14 +76,14 @@ function App() {
                   <Route path="/invoice-history" element={<InvoiceHistory />} />
                   <Route path="/invoice-details/:id" element={<InvoiceDetails />} />
                   <Route path="/invoice-payment/:id" element={<InvoicePayment />} />
+
+                  {/* ROTAS SÓ PARA ADMIN */}
+                  <Route element={<RequireRole role="admin" />}>
+                    <Route path="/request-management" element={<RequestManagement />} />
+                    <Route path="/order-management" element={<OrderManagement />} />
+                  </Route>
                 </Route>
 
-                {/* ROTAS SÓ PARA ADMIN */}
-                <Route element={<RequireRole role="admin" />}>
-                  <Route path="/request-management" element={<RequestManagement />} />
-                  <Route path="/ordermanagement" element={<OrderManagement />} />
-                </Route>
-                  
                   {/* Se nada bater, redireciona para / */}
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>

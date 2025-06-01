@@ -1,6 +1,7 @@
+// src/pages/request/RequestManagement.jsx
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { useRequests } from "../../context/RequestContext";
@@ -9,30 +10,32 @@ import { useAuth } from "../../context/AuthContext";
 const RequestManagement = () => {
   const { user } = useAuth();
 
-  // Se não for admin ou não estiver logado, volta para "/"
+  // 1) Se não estiver logado ou não for admin, redireciona para "/"
   if (!user || user.role !== "admin") {
     return <Navigate to="/" replace />;
   }
 
+  // 2) Puxa array completo de requests e função para atualizar status
   const { requests, updateRequestStatus } = useRequests();
-  const pendingRequests = requests.filter(r => r.status === "Pending");
+  // Filtra apenas os “Pending”
 
-  const [managementRequests, setManagementRequests] = useState(pendingRequests);
+  const [managementRequests, setManagementRequests] = useState(requests);
   const [selectedRequest, setSelectedRequest] = useState(
-    pendingRequests[0] || null
+    requests[0] || null
   );
   const [actionNote, setActionNote] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const [processedRequest, setProcessedRequest] = useState(null);
 
+  // 3) Quando o array de “Pending” mudar, atualiza estado local e seleciona o primeiro
   useEffect(() => {
-    setManagementRequests(pendingRequests);
-
-    if (pendingRequests.length > 0) {
-      setSelectedRequest(prev => {
-        if (!prev || !pendingRequests.find(r => r.id === prev.id)) {
-          return pendingRequests[0];
+    setManagementRequests(requests);
+    if (requests.length > 0) {
+      setSelectedRequest((prev) => {
+        // Se o que estava selecionado não existe mais, escolhe o primeiro
+        if (!prev || !requests.find((r) => r.id === prev.id)) {
+          return requests[0];
         }
         return prev;
       });
@@ -41,13 +44,15 @@ const RequestManagement = () => {
       setSelectedRequest(null);
       setActionNote("");
     }
-  }, [pendingRequests]);
+  }, [requests]);
 
-  const handleSelectRequest = request => {
+  // 4) Seleciona pedido ao clicar na lista
+  const handleSelectRequest = (request) => {
     setSelectedRequest(request);
     setActionNote(request.notes || "");
   };
 
+  // 5) Aprova (muda status para “Approved” e exibe modal de confirmação)
   const handleApprove = () => {
     if (!selectedRequest) return;
 
@@ -56,13 +61,15 @@ const RequestManagement = () => {
     setProcessedRequest({
       id: selectedRequest.id,
       date: selectedRequest.date,
-      status: "Approved"
+      status: "Approved",
     });
     setShowModal(true);
 
-    const updated = managementRequests.filter(r => r.id !== selectedRequest.id);
+    // Remove da lista local
+    const updated = managementRequests.filter(
+      (r) => r.id !== selectedRequest.id
+    );
     setManagementRequests(updated);
-
     if (updated.length > 0) {
       setSelectedRequest(updated[0]);
       setActionNote("");
@@ -72,6 +79,7 @@ const RequestManagement = () => {
     }
   };
 
+  // 6) Recusa (muda status para “Rejected” e exibe modal)
   const handleReject = () => {
     if (!selectedRequest) return;
 
@@ -80,13 +88,14 @@ const RequestManagement = () => {
     setProcessedRequest({
       id: selectedRequest.id,
       date: selectedRequest.date,
-      status: "Rejected"
+      status: "Rejected",
     });
     setShowModal(true);
 
-    const updated = managementRequests.filter(r => r.id !== selectedRequest.id);
+    const updated = managementRequests.filter(
+      (r) => r.id !== selectedRequest.id
+    );
     setManagementRequests(updated);
-
     if (updated.length > 0) {
       setSelectedRequest(updated[0]);
       setActionNote("");
@@ -100,6 +109,7 @@ const RequestManagement = () => {
     setShowModal(false);
   };
 
+  // 7) Se não houver pedidos pendentes (e não estivermos mostrando modal), exibe mensagem
   if (managementRequests.length === 0 && !showModal) {
     return (
       <div className="request-management-page">
@@ -111,6 +121,7 @@ const RequestManagement = () => {
     );
   }
 
+  // 8) Renderiza a lista + painel de detalhes + modal de sucesso
   return (
     <div className="request-management-page">
       <Header title="Gestão de Pedidos" />
@@ -121,10 +132,11 @@ const RequestManagement = () => {
         </div>
 
         <div className="management-layout">
+          {/* Lista de pedidos pendentes */}
           <div className="request-list-container">
             <h3>Selecione um Pedido</h3>
             <div className="request-list">
-              {managementRequests.map(request => (
+              {managementRequests.map((request) => (
                 <div
                   key={request.id}
                   className={`request-list-item ${
@@ -145,6 +157,7 @@ const RequestManagement = () => {
             </div>
           </div>
 
+          {/* Painel de detalhes do pedido selecionado */}
           {selectedRequest && (
             <div className="request-details-panel">
               <h3>Detalhes do Pedido</h3>
@@ -177,17 +190,24 @@ const RequestManagement = () => {
                   <label>Anotações:</label>
                   <textarea
                     value={actionNote}
-                    onChange={e => setActionNote(e.target.value)}
+                    onChange={(e) => setActionNote(e.target.value)}
                     className="action-note"
                     placeholder="Digite notas sobre sua decisão..."
                     rows="3"
-                  ></textarea>
+                  />
                 </div>
+
                 <div className="action-buttons">
-                  <button className="approve-button" onClick={handleApprove}>
+                  <button
+                    className="approve-button"
+                    onClick={handleApprove}
+                  >
                     Aprovar
                   </button>
-                  <button className="reject-button" onClick={handleReject}>
+                  <button
+                    className="reject-button"
+                    onClick={handleReject}
+                  >
                     Recusar
                   </button>
                 </div>
@@ -197,6 +217,7 @@ const RequestManagement = () => {
         </div>
       </div>
 
+      {/* Modal de sucesso (aprovado ou recusado) */}
       {showModal && processedRequest && (
         <div className="modal-overlay">
           <div className="success-modal">
@@ -207,7 +228,7 @@ const RequestManagement = () => {
                   backgroundColor:
                     processedRequest.status === "Approved"
                       ? "#dcfce7"
-                      : "#fee2e2"
+                      : "#fee2e2",
                 }}
               >
                 {processedRequest.status === "Approved" ? (
