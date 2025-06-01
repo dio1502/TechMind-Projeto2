@@ -1,28 +1,28 @@
 import { Link } from "react-router-dom";
-import reportsData from '../components/reports.json';
 import React, { useState, useEffect } from 'react';
 import ReportCard from '../pages/ReportCard.jsx'; // componete que exibe um report
 
 const ReportMain = () => {
-    const [reports, setReports] = useState([]);
-    
-    const [previewReport, setPreviewReport] = useState(null);
-    useEffect(() => {
-      // Em ambiente real, aqui faria fetch('/reports')
-      setReports(reportsData);
-    }, []);
- 
-    // Handler que recebe o id vindo do botão e define o report
-    const handlePreview = (id) => {
-    const report = reports.find(r => r.id === id);
-    setPreviewReport(report);} 
-    // aqui você pode abrir um modal ou navegar para /reports/:id
-    return (
-<div ClassNameName="report-page">
+  const [reports, setReports] = useState([]);
 
-      <Link to="/reports/manage" className="link-main">
-        <img src="/dist/left-arrow.svg" alt="Voltar" />
-        <span>Gestão de Reports</span>
+
+  useEffect(() => {
+    fetch('http://localhost:4000/reports')
+      .then(res => {
+        if (!res.ok) throw new Error('Erro ao carregar reports');
+        return res.json();
+      })
+      .then(data => setReports(data))
+      .catch(err => {
+        console.error(err);
+        // Aqui, se quiser, você pode exibir uma mensagem de erro no UI
+      });
+  }, []);
+
+  return (
+    <div className="report-page">
+      <Link to="/home" className="link-main">
+         Home
       </Link>
 
       <div className="reports-list">
@@ -30,18 +30,15 @@ const ReportMain = () => {
           <ReportCard
             key={report.id}
             report={report}
-            onPreview={handlePreview}
           />
         ))}
+        {reports.length === 0 && (
+          <p style={{ marginTop: '2rem', textAlign: 'center' }}>
+            Carregando ou nenhum report encontrado...
+          </p>
+        )}
       </div>
-
-      {/* Exemplo de modal de preview */}
-      {previewReport && (
-        <PreviewModal
-          report={previewReport}
-          onClose={() => setPreviewReport(null)}
-        />
-      )}
-</div>
-)} 
+    </div>
+  );
+} 
 export default ReportMain;

@@ -1,4 +1,5 @@
-[
+{
+   "reports":[
   {
     "id": 1,
     "subject": "Vazamento no banheiro",
@@ -70,3 +71,4 @@
     "unit": "Bloco B - Apt 102"
   }
 ]
+}

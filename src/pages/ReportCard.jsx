@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const statusClasses = {
   'pendente': 'status-pendente',
@@ -7,11 +8,11 @@ const statusClasses = {
   'rejeitado': 'status-rejeitado',
 };
 
-function ReportCard({ report, onPreview }) {
+function ReportCard({ report }) {
   return (
-    <article className="report-card">
+  <article className="report-card">
       <div className="report-header">
-        <h2 ClassName="report-title">Report #{report.id}</h2>
+        <h2 className="report-title">Report #{report.id}</h2>
         <span className={`report-status ${statusClasses[report.status]}`}>
           {report.status}
         </span>
@@ -21,12 +22,10 @@ function ReportCard({ report, onPreview }) {
         <time dateTime={report.date}>{report.date}</time>
         <span>{report.author}</span>
       </div>
-      <div className="report-actions">
-        <button onClick={() => onPreview(report.id)} className="btn-preview">
-          Detalhes
-        </button>
-      </div>
-    </article>
+      <Link to={`/reportmanage/${report.id}`} >
+        Detalhes
+      </Link>
+  </article>
   );
 }
 export default ReportCard;
