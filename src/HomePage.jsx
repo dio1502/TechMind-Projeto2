@@ -63,10 +63,21 @@ const HomePage = () => {
             </Link>
           </nav>
         </div>
-        
+
+        <div className="module">
+          <h2 className="module-title">Report Management</h2>
+          <nav className="module-nav">
+            <Link to="/reportissueForm" className="nav-link">
+               Create Report
+            </Link>
+            <Link to="/reportmain" className="nav-link">
+              Reports History
+            </Link>
+          </nav>
+        </div>
+
       </div>
     </div>
   )
 }
-
 export default HomePage

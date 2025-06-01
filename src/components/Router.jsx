@@ -9,6 +9,10 @@ import { AuthProvider } from '../context/AuthContext.jsx';
 import RequireAuth from "../components/requireAuth.jsx";
 import RequireRole from "../components/requireRole.jsx";
 
+import ReportMain from "../pages/subpage-reports/Reportmain" ;
+import ReportIssueForm from "../pages/subpage-reports/reportCreate" ;
+import Reportmanage from "../pages/subpage-reports/reportManage" ;
+
 import AnnouncementDetails from '../pages/subpage-announcement/AnnouncemnetDetails';
 import AnnouncementHistory from "../pages/subpage-announcement/AnnouncementHistory"
 import AnnouncementRegistration from '../pages/subpage-announcement/AnnouncementRegistration';
@@ -59,6 +63,12 @@ function App() {
                 <Route element={<RequireAuth />}>
                   {/* Páginas disponíveis para qualquer usuário logado (admin ou user) */}
                   <Route path="/homepage" element={<HomePage />} />
+
+                  <Route path="/" element={<Navigate to="/home" replace />} />
+                  <Route path="/reportMain" element={<ReportMain />} />
+                  <Route path="/reportmanage/:id" element={<Reportmanage />} />
+                  <Route path="/reportmanage/" element={<Navigate to="/reportMain" replace />} />
+                  <Route path="/reportissueForm" element={<ReportIssueForm />} />
 
                   <Route path="/announcement-registration" element={<AnnouncementRegistration />} />
                   <Route path="/announcement-history" element={<AnnouncementHistory />} />

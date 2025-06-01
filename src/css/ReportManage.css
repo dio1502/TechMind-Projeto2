@@ -1,0 +1,121 @@
+/* Container da página */
+.report-page {
+  padding: 0rem 8rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; 
+  background-color: #6699CC;
+  
+}
+
+/* Área de gestão */
+.report-management {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.15rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  justify-self: center;
+}
+
+/* Título */
+.report-management h1 {
+  font-size: 1.50rem;
+  margin-bottom: 1.8rem;
+  
+}
+
+/* Grupos de campo */
+.field-group {
+  display: flex;
+  flex-direction: row;
+  margin: 1.5rem 1.25rem;
+}
+.field-group label {
+  
+  margin: 0rem 1rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: #4b5563; 
+  width: 8rem;
+}
+.field-group output,
+.field-group textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #f3f4f6;
+  font-size: 1rem;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+.field-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Botões de ação */
+.actions {
+  display: flex;
+  align-items: center;
+  margin-top: 1.75rem;
+}
+.actions label {
+  margin-right: 1rem;
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.actions .btn-approve,
+.actions .btn-reject {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 0.75rem;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.actions .btn-approve {
+  background: #10b981;
+  color: #fff;
+}
+.actions .btn-approve:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.actions .btn-reject {
+  background: #ef4444;
+  color: #fff;
+}
+.actions .btn-reject:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Responsivo */
+@media (max-width: 570px) {
+  .report-page {
+    padding: 1rem;
+  }
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .actions .btn-approve,
+  .actions .btn-reject {
+    margin-bottom: 0.5rem;
+  }
+  .field-group {
+  display: flex;
+  flex-direction: row;
+  margin: 0rem 0rem 1rem 0rem;
+  }
+  .field-group label {
+  
+  margin: 0rem 0.6rem;
+  font-weight: 500;
+  font-size: 0.6rem;
+  color: #4b5563; 
+  width: 3.5rem;
+  }
+  
+}
