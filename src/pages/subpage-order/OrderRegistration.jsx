@@ -73,7 +73,7 @@ const OrderRegistration = () => {
 
   const handleContinue = () => {
     setShowNotification(false)
-    // Reset form
+
     setFormData({
       recipientName: "",
       apartmentNumber: "",
@@ -84,7 +84,7 @@ const OrderRegistration = () => {
 
   const handleViewOrder = () => {
     setShowNotification(false)
-    // Navigate to the specific order details page
+
     navigate(`/order-details/${orderDetails.id}`)
   }
 

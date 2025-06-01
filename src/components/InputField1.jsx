@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const InputField1 = ({ type, placeholder, icon, value, onChange}) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const inputType = type === "password" ? (isPasswordShown ? "text" : "password") : type;// Se o usuário passar type="password", trocamos por "text" quando isPasswordShown for true
+  const inputType = type === "password" ? (isPasswordShown ? "text" : "password") : type;
   return (
     <div className="input-wrapper">
       <input

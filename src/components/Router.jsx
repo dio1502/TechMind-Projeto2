@@ -55,9 +55,9 @@ function App() {
                 <Route path="/password-selection" element={<ForgotPasswordSelection />} />
                 <Route path="/forgotpassword-newcredentials" element={<ForgotPasswordNewCredentials />} />
 
-                {/* QUALQUER ROTA ABAIXO SÓ ACESSÍVEL SE ESTIVER LOGADO */}
+
                 <Route element={<RequireAuth />}>
-                  {/* Páginas disponíveis para qualquer usuário logado (admin ou user) */}
+
                   <Route path="/homepage" element={<HomePage />} />
 
                   <Route path="/announcement-registration" element={<AnnouncementRegistration />} />
@@ -77,14 +77,14 @@ function App() {
                   <Route path="/invoice-details/:id" element={<InvoiceDetails />} />
                   <Route path="/invoice-payment/:id" element={<InvoicePayment />} />
 
-                  {/* ROTAS SÓ PARA ADMIN */}
+
                   <Route element={<RequireRole role="admin" />}>
                     <Route path="/request-management" element={<RequestManagement />} />
                     <Route path="/order-management" element={<OrderManagement />} />
                   </Route>
                 </Route>
 
-                  {/* Se nada bater, redireciona para / */}
+
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </div>

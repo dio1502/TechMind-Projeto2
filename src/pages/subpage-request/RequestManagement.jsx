@@ -7,18 +7,18 @@ import { useRequests } from "../../context/RequestContext"
 const RequestManagement = () => {
   const { requests, updateRequestStatus } = useRequests()
 
-  // Filter to only show pending requests
+
   const pendingRequests = requests.filter((request) => request.status === "Pending")
 
   const [selectedRequest, setSelectedRequest] = useState(pendingRequests[0] || null)
   const [actionNote, setActionNote] = useState("")
   const [managementRequests, setManagementRequests] = useState(pendingRequests)
 
-  // Modal states
+
   const [showModal, setShowModal] = useState(false)
   const [processedRequest, setProcessedRequest] = useState(null)
 
-  // Update selected request when pending requests change
+
   useEffect(() => {
     setManagementRequests(pendingRequests)
     if (pendingRequests.length > 0 && (!selectedRequest || !pendingRequests.find((r) => r.id === selectedRequest.id))) {
@@ -30,33 +30,33 @@ const RequestManagement = () => {
     }
   }, [pendingRequests, selectedRequest])
 
-  // Handle selecting a request
+
   const handleSelectRequest = (request) => {
     setSelectedRequest(request)
     setActionNote(request.notes || "")
   }
 
-  // Handle approving a request
+
   const handleApprove = () => {
     if (!selectedRequest) return
 
     const updatedRequest = updateRequestStatus(selectedRequest.id, "Approved", actionNote)
 
-    // Store the processed request data for the modal
+
     setProcessedRequest({
       id: selectedRequest.id,
       date: selectedRequest.date,
       status: "Approved",
     })
 
-    // Show the modal
+
     setShowModal(true)
 
-    // Remove the request from the management list
+
     const updatedRequests = managementRequests.filter((request) => request.id !== selectedRequest.id)
     setManagementRequests(updatedRequests)
 
-    // Select the next request if available
+
     if (updatedRequests.length > 0) {
       setSelectedRequest(updatedRequests[0])
       setActionNote("")
@@ -66,27 +66,27 @@ const RequestManagement = () => {
     }
   }
 
-  // Handle rejecting a request
+
   const handleReject = () => {
     if (!selectedRequest) return
 
     const updatedRequest = updateRequestStatus(selectedRequest.id, "Rejected", actionNote)
 
-    // Store the processed request data for the modal
+
     setProcessedRequest({
       id: selectedRequest.id,
       date: selectedRequest.date,
       status: "Rejected",
     })
 
-    // Show the modal
+
     setShowModal(true)
 
-    // Remove the request from the management list
+
     const updatedRequests = managementRequests.filter((request) => request.id !== selectedRequest.id)
     setManagementRequests(updatedRequests)
 
-    // Select the next request if available
+
     if (updatedRequests.length > 0) {
       setSelectedRequest(updatedRequests[0])
       setActionNote("")
@@ -96,7 +96,7 @@ const RequestManagement = () => {
     }
   }
 
-  // Close the modal
+
   const handleCloseModal = () => {
     setShowModal(false)
   }
@@ -196,7 +196,7 @@ const RequestManagement = () => {
         </div>
       </div>
 
-      {/* Success Modal */}
+
       {showModal && processedRequest && (
         <div className="modal-overlay">
           <div className="success-modal">

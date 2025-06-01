@@ -12,8 +12,7 @@ const RequestList = () => {
   const filteredRequests = requests.filter(request => {
     const searchLower = searchTerm.toLowerCase();
 
-    // Atenção: se request.id for number, toLowerCase vai falhar.
-    // Melhor converter para string antes:
+
     const idString = String(request.id).toLowerCase();
     const subjectString = request.subject?.toLowerCase() || "";
 
@@ -22,9 +21,9 @@ const RequestList = () => {
 
     let matchesDate = false;
     if (request.date) {
-      // Supondo que request.date seja “YYYY-MM-DD”
+
       const dateISO = request.date;
-      // “dd/mm” -> “MM/DD” -> compara
+
       const dateLocalPT = new Date(request.date)
         .toLocaleDateString("pt-PT")
         .toLowerCase();

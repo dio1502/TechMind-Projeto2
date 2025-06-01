@@ -1,4 +1,4 @@
-// src/pages/subpage-order/OrderManagement.jsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -10,16 +10,16 @@ const OrderManagement = () => {
   const navigate = useNavigate();
   const { orders, markOrderAsDelivered } = useOrders();
 
-  // 1) Usamos TODOS os pedidos, não apenas os pendentes
+  
   const [managementOrders, setManagementOrders] = useState(orders);
   const [selectedOrder, setSelectedOrder] = useState(orders[0] || null);
   const [message, setMessage] = useState("");
 
-  // 2) Sempre que `orders` mudar no contexto, atualizamos localmente
+  
   useEffect(() => {
     setManagementOrders(orders);
 
-    // Se o pedido selecionado não existir mais na nova lista, seleciona o primeiro
+    
     if (orders.length > 0) {
       setSelectedOrder((prev) => {
         if (!prev || !orders.find((o) => o.id === prev.id)) {
@@ -46,13 +46,13 @@ const OrderManagement = () => {
       markOrderAsDelivered(selectedOrder.id);
       setMessage("Order marked as delivered successfully!");
 
-      // Atualiza no componente localmente para refletir imediatamente
+      
       setSelectedOrder({
         ...selectedOrder,
         status: "Delivered",
       });
 
-      // A mensagem some após 2 segundos e limpa a seleção
+      
       setTimeout(() => {
         setMessage("");
         setSelectedOrder(null);
@@ -74,7 +74,7 @@ const OrderManagement = () => {
         </div>
 
         <div className="management-layout">
-          {/* 3) Lista de todos os pedidos */}
+          
           <div className="request-list-container">
             <h3>Select an Order</h3>
             <div className="request-list no-scroll">
@@ -101,7 +101,7 @@ const OrderManagement = () => {
                     <div className="request-list-apartment">
                       Apt: {order.apartmentNumber}
                     </div>
-                    {/* 4) Exibe o status de cada pedido */}
+                    
                     <div className="request-list-status">
                       <span
                         className={`status-badge status-${order.status
@@ -117,7 +117,7 @@ const OrderManagement = () => {
             </div>
           </div>
 
-          {/* 5) Painel de detalhes do pedido selecionado */}
+          
           <div className="request-details-panel">
             <h3>Order Details</h3>
             {selectedOrder ? (
@@ -185,7 +185,7 @@ const OrderManagement = () => {
                   </div>
                 )}
 
-                {/* 6) Mostrar o botão “Arrived” apenas se não estiver “Delivered” */}
+                
                 <div className="action-buttons-container">
                   {selectedOrder.status !== "Delivered" && (
                     <button

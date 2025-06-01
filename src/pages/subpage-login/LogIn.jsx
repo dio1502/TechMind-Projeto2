@@ -6,22 +6,22 @@ import '../../components/Router.jsx';
 import '../../css/Login.css'
 
 const LogIn = () => {
-  const { login } = useAuth();         // pega a função de login do contexto
+  const { login } = useAuth();         
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
-  const [apartment, setApartment] = useState(""); // se precisar usar depois
+  const [apartment, setApartment] = useState(""); 
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
-    // Chama login() do contexto, que retorna true se sucesso
+    
     const ok = login(email, password);
     if (!ok) {
       setError("Credenciais inválidas.");
     }
-    // Se for válido, o login() já navega para /admin ou /user conforme o papel
+    
   };
    return (
     <div className="login-container">
