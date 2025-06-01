@@ -34,7 +34,7 @@ const ReportIssueForm = () => {
         } else {
           const maxId = reports.reduce((max, item) => {
             return typeof item.id === "number" && item.id > max ? item.id : max;
-          }, 0);
+          }, 8);
           setReportId(maxId + 1);
         }
       } catch (err) {
@@ -51,6 +51,17 @@ const ReportIssueForm = () => {
   // 2) handleSubmit — monta FormData e envia ao servidor
   const handleSubmit = async (e) => {
     e.preventDefault();
+      const body = {
+        id: reportId,
+        status,
+        subject,
+        category,
+        description,
+        author,
+        unit,
+        date: new Date().toISOString().split("T")[0],
+        attachment: attachment?.name || null,
+      };
 
     // Validação dos campos obrigatórios
     if (
@@ -94,8 +105,12 @@ const ReportIssueForm = () => {
       // Envia FormData (multipart/form-data) ao nosso endpoint Express
       const response = await fetch("http://localhost:4000/reports", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
       });
+
 
       if (!response.ok) {
         // Se o servidor retornar erro (ex.: ID duplicado), parse do JSON
@@ -174,16 +189,6 @@ const ReportIssueForm = () => {
               Descrição
             </label>
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} maxLength={1000} required rows={4} placeholder="Detalhe o problema com o máximo de informações"/>
-          </div>
-
-          <div class="field">
-            <label>
-              Anexo (opcional)
-            </label>
-            <input type="file" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" onChange={handleFileChange}/>
-            {attachment && (
-              <p>Arquivo selecionado: <strong>{attachment.name}</strong></p>
-            )}
           </div>
 
           <div class="field">
