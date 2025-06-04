@@ -1,4 +1,4 @@
-// src/pages/request/RequestManagement.jsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -115,7 +115,7 @@ const RequestManagement = () => {
       <div className="request-management-page">
         <Header title="Gestão de Pedidos" />
         <div className="no-requests">
-          <p>Não há pedidos pendentes para gerenciar.</p>
+          <p>There are no pending orders to manage.</p>
         </div>
       </div>
     );
@@ -124,17 +124,17 @@ const RequestManagement = () => {
 
   return (
     <div className="request-management-page">
-      <Header title="Gestão de Pedidos" />
+      <Header title="Order Management" />
 
       <div className="management-container">
         <div className="management-header">
-          <h2>Pedidos Pendentes ({managementRequests.length})</h2>
+          <h2>Pending Orders ({managementRequests.length})</h2>
         </div>
 
         <div className="management-layout">
 
           <div className="request-list-container">
-            <h3>Selecione um Pedido</h3>
+            <h3>Select an order</h3>
             <div className="request-list">
               {managementRequests.map((request) => (
                 <div
@@ -160,39 +160,39 @@ const RequestManagement = () => {
 
           {selectedRequest && (
             <div className="request-details-panel">
-              <h3>Detalhes do Pedido</h3>
+              <h3>Order Deatils</h3>
               <div className="request-management-details">
                 <div className="detail-row">
-                  <label>Número do Processo:</label>
+                  <label>Process Number:</label>
                   <div className="detail-value">{selectedRequest.id}</div>
                 </div>
                 <div className="detail-row">
-                  <label>Data:</label>
+                  <label>Date:</label>
                   <div className="detail-value">{selectedRequest.date}</div>
                 </div>
                 <div className="detail-row">
-                  <label>Apartamento:</label>
+                  <label>Apartment:</label>
                   <div className="detail-value">
                     {selectedRequest.apartmentNumber || "N/A"}
                   </div>
                 </div>
                 <div className="detail-row">
-                  <label>Assunto:</label>
+                  <label>Topic:</label>
                   <div className="detail-value">{selectedRequest.subject}</div>
                 </div>
                 <div className="detail-row">
-                  <label>Descrição:</label>
+                  <label>Description:</label>
                   <div className="detail-value scrollable">
                     {selectedRequest.description}
                   </div>
                 </div>
                 <div className="detail-row">
-                  <label>Anotações:</label>
+                  <label>Notes:</label>
                   <textarea
                     value={actionNote}
                     onChange={(e) => setActionNote(e.target.value)}
                     className="action-note"
-                    placeholder="Digite notas sobre sua decisão..."
+                    placeholder="Enter notes about your decision..."
                     rows="3"
                   />
                 </div>
@@ -202,13 +202,13 @@ const RequestManagement = () => {
                     className="approve-button"
                     onClick={handleApprove}
                   >
-                    Aprovar
+                    Approve
                   </button>
                   <button
                     className="reject-button"
                     onClick={handleReject}
                   >
-                    Recusar
+                    Refuse
                   </button>
                 </div>
               </div>
@@ -268,15 +268,15 @@ const RequestManagement = () => {
             </div>
 
             <h2 className="success-title">
-              Pedido{" "}
+              Order{" "}
               {processedRequest.status === "Approved"
                 ? "Aprovado"
                 : "Recusado"}{" "}
-              com Sucesso!
+              placed successguly!
             </h2>
             <p className="success-subtitle">
-              O pedido foi{" "}
-              {processedRequest.status.toLowerCase()} e atualizado no sistema.
+              The order{" "}
+              {processedRequest.status.toLowerCase()} was updated in the system.
             </p>
 
             <div className="order-info-list">
@@ -299,7 +299,7 @@ const RequestManagement = () => {
                   </svg>
                 </div>
                 <div className="info-content">
-                  <span className="info-label">ID do Pedido</span>
+                  <span className="info-label">Order ID</span>
                   <span className="info-value">{processedRequest.id}</span>
                 </div>
               </div>
@@ -350,7 +350,7 @@ const RequestManagement = () => {
                   </svg>
                 </div>
                 <div className="info-content">
-                  <span className="info-label">Data</span>
+                  <span className="info-label">Date</span>
                   <span className="info-value">{processedRequest.date}</span>
                 </div>
               </div>
@@ -388,7 +388,7 @@ const RequestManagement = () => {
 
             <div className="modal-buttons">
               <button className="continue-button" onClick={handleCloseModal}>
-                Continuar
+                Continue
               </button>
             </div>
           </div>
